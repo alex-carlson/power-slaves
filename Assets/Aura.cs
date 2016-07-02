@@ -21,4 +21,14 @@ public class Aura : MonoBehaviour {
 			GetComponent<SpriteRenderer> ().sprite = aura [auraLevel];
 		}
 	}
+
+	public void gainPower(){
+		auraLevel++;
+		GetComponent<SpriteRenderer> ().sprite = aura [auraLevel];
+	}
+
+	public void losePower(){
+		auraLevel--;
+		GetComponent<SpriteRenderer> ().sprite = aura [auraLevel];
+	}
 }
