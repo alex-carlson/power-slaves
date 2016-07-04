@@ -55,8 +55,11 @@ public class enemyAI : MonoBehaviour {
 		if (col.transform.tag != "Player" && col.transform.tag != "Bullet") {
 			myDirection = Direction.None;
 			Invoke ("Brain", 0);
-		} else if (col.transform.tag == "Bullet"){
+		} else if (col.transform.tag == "Bullet") {
 			health -= 25;
+			Destroy (col.transform.gameObject);
+		} else if (col.transform.tag == "Player") {
+			
 		}
 	}
 
