@@ -6,8 +6,9 @@ public class Movement : MonoBehaviour {
 	public int Speed = 1;
 	public Sprite atkSprite;
 	public Sprite blkSprite;
+	public GameObject atkParticle;
 
-	bool isAttacking = false;
+	public bool isAttacking = false;
 	bool isBlocking = false;
 
 	SpriteRenderer m_Sprite;
@@ -48,6 +49,7 @@ public class Movement : MonoBehaviour {
 		isAttacking = true;
 		Sprite tempSprite = m_Sprite.sprite;
 		m_Sprite.sprite = atkSprite;
+		Instantiate (atkParticle, transform.position + (transform.right * 10) + (transform.up * 10), Quaternion.identity);
 		yield return new WaitForSeconds (0.2f);
 		m_Sprite.sprite = tempSprite;
 		isAttacking = false;
@@ -60,5 +62,24 @@ public class Movement : MonoBehaviour {
 		yield return new WaitForSeconds (0.2f);
 		m_Sprite.sprite = tempSprite;
 		isBlocking = false;
+	}
+
+	IEnumerator Blink(){
+		SpriteRenderer sp = GetComponent<SpriteRenderer> ();
+		sp.enabled = false;
+		yield return new WaitForSeconds (0.18f);
+		sp.enabled = true;
+		yield return new WaitForSeconds (0.18f);
+		sp.enabled = false;
+		yield return new WaitForSeconds (0.18f);
+		sp.enabled = true;
+		yield return new WaitForSeconds (0.18f);
+		sp.enabled = false;
+		yield return new WaitForSeconds (0.18f);
+		sp.enabled = true;
+		yield return new WaitForSeconds (0.18f);
+		sp.enabled = false;
+		yield return new WaitForSeconds (0.18f);
+		sp.enabled = true;
 	}
 }

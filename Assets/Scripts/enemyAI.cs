@@ -4,6 +4,8 @@ using System.Collections;
 public class enemyAI : MonoBehaviour {
 
 	[Range(0, 1)] public float Speed = 0.1f;
+	public int health = 100;
+
 	enum Direction {North, South, East, West, None};
 
 	Direction myDirection;
@@ -39,6 +41,10 @@ public class enemyAI : MonoBehaviour {
 				transform.localRotation = Quaternion.Euler(0, 180, 0);
 			}
 		}
+
+		if (health <= 0) {
+			Die ();
+		}
 	}
 
 	void Brain(){
@@ -46,8 +52,15 @@ public class enemyAI : MonoBehaviour {
 	}
 
 	void OnCollisionEnter2D(Collision2D col){
-		if (col.transform.tag != "Player") {
+		if (col.transform.tag != "Player" && col.transform.tag != "Bullet") {
 			myDirection = Direction.None;
+			Invoke ("Brain", 0);
+		} else if (col.transform.tag == "Bullet"){
+			health -= 25;
 		}
+	}
+
+	void Die(){
+		Destroy (this.gameObject);
 	}
 }

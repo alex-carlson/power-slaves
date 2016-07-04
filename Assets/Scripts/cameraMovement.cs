@@ -5,7 +5,6 @@ public class cameraMovement : MonoBehaviour {
 
 	public GameObject player;
 	Camera m_Cam;
-	float dist = 0;
 
 	void Start(){
 		m_Cam = GetComponent<Camera> ();
