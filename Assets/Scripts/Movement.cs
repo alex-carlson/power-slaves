@@ -3,25 +3,33 @@ using System.Collections;
 
 public class Movement : MonoBehaviour {
 
-	public int Speed = 1;
-	public Sprite atkSprite;
-	public Sprite blkSprite;
+	public int Speed = 5;
 	public GameObject atkParticle;
+	public GameObject hurtParticle;
+	Direction playerDir = Direction.S;
+	float x;
+	float y;
+
+	Sprite[] playerSprites;
+	Texture2D playerSpriteSheet;
 
 	public bool isAttacking = false;
 	bool isBlocking = false;
 
 	SpriteRenderer m_Sprite;
+	ParticleSystem m_particle;
 
 	// Use this for initialization
 	void Start () {
 		m_Sprite = GetComponent<SpriteRenderer> ();
+		playerSprites = Resources.LoadAll<Sprite> ("playerAngles");
+		m_particle = transform.parent.GetComponent<ParticleSystem> ();
 	}
-	
+
 	// Update is called once per frame
 	void Update () {
-		float x = Input.GetAxis ("Horizontal");
-		float y = Input.GetAxis ("Vertical");
+		x = Input.GetAxis ("Horizontal");
+		y = Input.GetAxis ("Vertical");
 		bool atk = Input.GetButtonDown ("Fire1");
 		bool block = Input.GetButtonDown ("Fire2");
 
@@ -34,33 +42,67 @@ public class Movement : MonoBehaviour {
 		if(block && isBlocking == false){
 			StartCoroutine("Block");
 		}
+
+		if (y == 0 && x == 0) {
+			return;
+		} else if (y > 0 && x == 0) {
+			playerDir = Direction.N;
+		} else if (y > 0 && x > 0) {
+			playerDir = Direction.NE;
+		} else if (y == 0 && x > 0) {
+			playerDir = Direction.E;
+		} else if (y < 0 && x > 0) {
+			playerDir = Direction.SE;
+		} else if (y < 0 && x == 0) {
+			playerDir = Direction.S;
+		} else if (y < 0 && x < 0) {
+			playerDir = Direction.SW;
+		} else if (y == 0 && x < 0) {
+			playerDir = Direction.W;
+		} else if (y > 0 && x < 0) {
+			playerDir = Direction.NW;
+		}
+
+		SpriteSwap ();
 	}
 
 	void Move(float x, float y){
-		if (x < 0) {
-			transform.localRotation = Quaternion.Euler(0, 180, 0);
+
+		transform.parent.transform.Translate (new Vector3 (x * Speed, y * Speed, 0));
+		m_particle.startSize = new Vector3 (x, y, 0).magnitude;
+	}
+
+	void SpriteSwap(){
+		if (playerDir == Direction.N) {
+			m_Sprite.sprite = playerSprites[1];
+		} else if (playerDir == Direction.NE) {
+			m_Sprite.sprite = playerSprites[2];
+		} else if (playerDir == Direction.E) {
+			m_Sprite.sprite = playerSprites[0];
+		} else if (playerDir == Direction.SE) {
+			m_Sprite.sprite = playerSprites[5];
+		} else if (playerDir == Direction.S) {
+			m_Sprite.sprite = playerSprites[4];
+		} else if (playerDir == Direction.SW) {
+			m_Sprite.sprite = playerSprites[6];
+		} else if (playerDir == Direction.W) {
+			m_Sprite.sprite = playerSprites[7];
 		} else {
-			transform.localRotation = Quaternion.Euler(0, 0, 0);
+			m_Sprite.sprite = playerSprites[3];
 		}
-		transform.parent.transform.Translate (new Vector3 (x, y, 0));
 	}
 
 	IEnumerator Attack(){
 		isAttacking = true;
-		Sprite tempSprite = m_Sprite.sprite;
-		m_Sprite.sprite = atkSprite;
-		Instantiate (atkParticle, transform.position + (transform.right * 10) + (transform.up * 10), Quaternion.identity);
-		yield return new WaitForSeconds (0.2f);
-		m_Sprite.sprite = tempSprite;
+		ExtensionMethods.m_Dir (playerDir);
+		Instantiate (atkParticle, transform.position+(ExtensionMethods.m_playerDir * 20), Quaternion.identity);
+		yield return new WaitForSeconds (0.1f);
 		isAttacking = false;
 	}
 
 	IEnumerator Block(){
 		isBlocking = true;
-		Sprite tempSprite = m_Sprite.sprite;
-		m_Sprite.sprite = blkSprite;
 		yield return new WaitForSeconds (0.2f);
-		m_Sprite.sprite = tempSprite;
 		isBlocking = false;
 	}
 
@@ -81,5 +123,9 @@ public class Movement : MonoBehaviour {
 		sp.enabled = false;
 		yield return new WaitForSeconds (0.18f);
 		sp.enabled = true;
+	}
+
+	float knockback(){
+		return Random.Range (0.05f, 0.5f);
 	}
 }

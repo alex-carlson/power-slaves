@@ -12,6 +12,10 @@ public class Propellor : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		rb.AddForce (transform.right * 10, ForceMode2D.Impulse);
+		rb.AddForce (transform.right*0.3f, ForceMode2D.Impulse);
+	}
+
+	void OnCollisionEnter2D(Collision2D col){
+		Destroy (this.gameObject, 0.2f);
 	}
 }

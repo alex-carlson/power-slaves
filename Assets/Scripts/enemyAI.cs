@@ -1,65 +1,115 @@
 ﻿using UnityEngine;
+using Pathfinding;
 using System.Collections;
 
+[RequireComponent (typeof (Rigidbody2D))]
+[RequireComponent (typeof (Seeker))]
 public class enemyAI : MonoBehaviour {
 
-	[Range(0, 1)] public float Speed = 0.1f;
+	public Transform target;
+	public float updateRate = 2f;
+
+	private Seeker seeker;
+	private Rigidbody2D rb;
+
+	public Path path;
+	[Range(300, 1000)] public float speed = 700f;
+	public ForceMode2D fMode;
 	public int health = 100;
+	[HideInInspector] public bool pathIsEnded = false;
+	public float nextWaypointDistance = 3;
+	private int currentWaypoint = 0;
+	private float playerDist = 300;
 
-	enum Direction {North, South, East, West, None};
+	void Start(){
+		seeker = GetComponent<Seeker> ();
+		rb = GetComponent<Rigidbody2D> ();
 
-	Direction myDirection;
+		if (target == null) {
+			return;
+		}
+			
+		seeker.StartPath(transform.position, target.position, OnPathComplete);
 
-	GameObject plr;
-	float dist;
-	bool inView = true;
-
-	// Use this for initialization
-	void Start () {
-		plr = GameObject.FindGameObjectWithTag ("Player");
-		InvokeRepeating ("Brain", 2, 2);
+		StartCoroutine (UpdatePath());
 	}
+
+	IEnumerator UpdatePath(){
+		if (target == null) {
+			return false;
+		}
+
+		seeker.StartPath(transform.position, target.position, OnPathComplete);
+
+		yield return new WaitForSeconds (1f / updateRate);
+		StartCoroutine (UpdatePath ());
 	
+	}
+
+	public void OnPathComplete(Path p){
+		if (!p.error) {
+			path = p;
+			currentWaypoint = 0;
+		}
+	}
+
+	void FixedUpdate(){
+		if (target == null)
+			return;
+
+		if (playerDist > 200)
+			return;
+		
+
+		if (path == null)
+			return;
+
+		if (currentWaypoint >= path.vectorPath.Count) {
+			if (pathIsEnded) 
+				return;
+
+			pathIsEnded = true;
+			return;
+		}
+
+		pathIsEnded = false;
+
+		Vector3 dir = (path.vectorPath [currentWaypoint] - transform.position).normalized;
+
+		dir *= speed * Time.fixedDeltaTime;
+
+		rb.AddForce (dir, fMode);
+
+		float dist = Vector3.Distance (transform.position, path.vectorPath [currentWaypoint]);
+
+		if (dist < nextWaypointDistance) {
+			currentWaypoint++;
+			return;
+		}
+
+
+	}
+		
 	// Update is called once per frame
 	void Update () {
-		dist = Vector3.Distance (transform.position, plr.transform.position);
-
-		if (dist < 10 && inView == true) {
-			//chase
-			transform.position = Vector3.MoveTowards(transform.position, plr.transform.position, Speed  * Time.deltaTime);
-
-		} else {
-			if (myDirection == Direction.North) {
-				transform.Translate (Vector3.up * Speed);
-			} else if (myDirection == Direction.East) {
-				transform.localRotation = Quaternion.Euler(0, 0, 0);
-				transform.Translate (Vector3.right * Speed);
-			} else if (myDirection == Direction.South) {
-				transform.Translate (-Vector3.up * Speed);
-			} else if(myDirection == Direction.West){
-				transform.Translate (Vector3.right * Speed);
-				transform.localRotation = Quaternion.Euler(0, 180, 0);
-			}
-		}
 
 		if (health <= 0) {
 			Die ();
+			return;
 		}
-	}
 
-	void Brain(){
-		myDirection = (Direction)Random.Range (0, 4);
+		playerDist = Vector3.Distance (transform.position, target.transform.position);
 	}
 
 	void OnCollisionEnter2D(Collision2D col){
-		if (col.transform.tag != "Player" && col.transform.tag != "Bullet") {
-			myDirection = Direction.None;
-			Invoke ("Brain", 0);
-		} else if (col.transform.tag == "Bullet") {
+		if (col.transform.tag == "Bullet") {
 			health -= 25;
-			Destroy (col.transform.gameObject);
+			Vector3 dir = (transform.position - col.transform.position);
+			rb.AddForce (dir.normalized * 10, ForceMode2D.Impulse);
+			Destroy (col.transform.gameObject, 0.2f);
 		} else if (col.transform.tag == "Player") {
-			
+			Vector3 dir = (transform.position - col.transform.position);
+			col.transform.GetComponent<Rigidbody2D> ().AddForce (-dir.normalized * 100, ForceMode2D.Impulse);
 		}
 	}
 

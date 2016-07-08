@@ -1,0 +1,4 @@
+Press ENTER to advance dialogue
+WASD to move
+M to fire
+ALT+F4 to quit
