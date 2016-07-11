@@ -5,6 +5,7 @@ public class cameraMovement : MonoBehaviour {
 
 	public GameObject player;
 	Camera m_Cam;
+	private Vector3 velocity = Vector3.zero;
 
 	void Start(){
 		m_Cam = GetComponent<Camera> ();
@@ -12,16 +13,8 @@ public class cameraMovement : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		Vector3 p = m_Cam.ScreenToWorldPoint (new Vector3 (Screen.width / 2, Screen.height / 2, m_Cam.nearClipPlane));
+		Vector3 dir = player.transform.position - transform.position;
 
-		if (player.transform.position.x > p.x + 64) {
-			m_Cam.transform.position += (Vector3.right * 128);
-		} else if (player.transform.position.x < p.x - 64) {
-			m_Cam.transform.position += (-Vector3.right * 128);
-		} else if (player.transform.position.y > p.y + 64) {
-			m_Cam.transform.position += (Vector3.up * 128);
-		} else if (player.transform.position.y < p.y - 64) {
-			m_Cam.transform.position += (-Vector3.up * 128);
-		}
+		transform.position = Vector3.SmoothDamp (transform.position + (dir / 4) + (Vector3.back * 20), player.transform.position + (Vector3.back * 20), ref velocity, 2f);
 	}
 }

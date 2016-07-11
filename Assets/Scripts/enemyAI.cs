@@ -2,31 +2,41 @@
 using Pathfinding;
 using System.Collections;
 
+public enum enemyType { Normal, Ranged };
+
 [RequireComponent (typeof (Rigidbody2D))]
 [RequireComponent (typeof (Seeker))]
+
 public class enemyAI : MonoBehaviour {
 
 	public Transform target;
 	public float updateRate = 2f;
+	public enemyType type;
 
 	private Seeker seeker;
 	private Rigidbody2D rb;
 
 	public Path path;
-	[Range(300, 1000)] public float speed = 700f;
+	[Range(700, 3000)] public float speed = 700f;
+	[Range(0, 200)] public float followDistance = 1f;
+	[Range(10, 1000)] public float shootDistance = 200f;
 	public ForceMode2D fMode;
 	public int health = 100;
 	[HideInInspector] public bool pathIsEnded = false;
 	public float nextWaypointDistance = 3;
 	private int currentWaypoint = 0;
 	private float playerDist = 300;
+	bool isShooting = false;
+
+	public GameObject weapon;
+
 
 	void Start(){
 		seeker = GetComponent<Seeker> ();
 		rb = GetComponent<Rigidbody2D> ();
 
 		if (target == null) {
-			return;
+			target = GameObject.FindGameObjectWithTag ("Player").transform;
 		}
 			
 		seeker.StartPath(transform.position, target.position, OnPathComplete);
@@ -78,7 +88,25 @@ public class enemyAI : MonoBehaviour {
 
 		dir *= speed * Time.fixedDeltaTime;
 
-		rb.AddForce (dir, fMode);
+		if (playerDist > followDistance) {
+			rb.AddForce (dir, fMode);
+			isShooting = false;
+		}
+
+		if (playerDist < shootDistance) {
+			if (type == enemyType.Ranged) {
+				// check if we are in view of target
+
+				//TODO: add raycast check
+
+				// shoot at target!
+
+				if (isShooting == false) {
+					isShooting = true;
+					InvokeRepeating ("Fire", 0, 0.25f);
+				}
+			} 
+		}
 
 		float dist = Vector3.Distance (transform.position, path.vectorPath [currentWaypoint]);
 
@@ -99,6 +127,11 @@ public class enemyAI : MonoBehaviour {
 		}
 
 		playerDist = Vector3.Distance (transform.position, target.transform.position);
+	}
+
+	void Fire(){
+		Vector3 instPos =  target.position - transform.position;
+		Instantiate (weapon, instPos, Quaternion.Euler (instPos.normalized));
 	}
 
 	void OnCollisionEnter2D(Collision2D col){

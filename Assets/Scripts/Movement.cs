@@ -9,6 +9,8 @@ public class Movement : MonoBehaviour {
 	Direction playerDir = Direction.S;
 	float x;
 	float y;
+	public GameObject objectiveMenu;
+	float quitTime = 0;
 
 	Sprite[] playerSprites;
 	Texture2D playerSpriteSheet;
@@ -18,12 +20,14 @@ public class Movement : MonoBehaviour {
 
 	SpriteRenderer m_Sprite;
 	ParticleSystem m_particle;
+	Animator m_anim;
 
 	// Use this for initialization
 	void Start () {
 		m_Sprite = GetComponent<SpriteRenderer> ();
 		playerSprites = Resources.LoadAll<Sprite> ("playerAngles");
 		m_particle = transform.parent.GetComponent<ParticleSystem> ();
+		m_anim = GetComponent<Animator> ();
 	}
 
 	// Update is called once per frame
@@ -33,7 +37,8 @@ public class Movement : MonoBehaviour {
 		bool atk = Input.GetButtonDown ("Fire1");
 		bool block = Input.GetButtonDown ("Fire2");
 
-		Move (x, y);
+		m_anim.SetFloat ("x", x);
+		m_anim.SetFloat ("y", y);
 	
 		if(atk && isAttacking == false) {
 			StartCoroutine ("Attack");
@@ -41,6 +46,24 @@ public class Movement : MonoBehaviour {
 
 		if(block && isBlocking == false){
 			StartCoroutine("Block");
+		}
+
+		if (Input.GetKey (KeyCode.Q)) {
+			objectiveMenu.SetActive (true);
+		} else {
+			objectiveMenu.SetActive (false);
+		}
+
+		if (Input.GetKey (KeyCode.Escape)) {
+			quitTime += Time.deltaTime;
+
+			if(quitTime > 1.5f){
+				Application.Quit();
+			}
+		}
+
+		if(Input.GetKeyUp(KeyCode.Escape)){
+			quitTime = 0;
 		}
 
 		if (y == 0 && x == 0) {
@@ -64,6 +87,12 @@ public class Movement : MonoBehaviour {
 		}
 
 		SpriteSwap ();
+	}
+
+	void FixedUpdate(){
+		x = Input.GetAxis ("Horizontal");
+		y = Input.GetAxis ("Vertical");
+		Move (x, y);
 	}
 
 	void Move(float x, float y){

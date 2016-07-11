@@ -6,11 +6,11 @@ public class Dialogue : MonoBehaviour {
 
 	public TextAsset textFile;
 	string[] dialogueLines;
-	public string[] commands;
 	int lineNumber = -1;
 
 	public Text uiText;
 	Canvas canvas;
+	GameObject panel;
 
 
 	// Use this for initialization
@@ -22,6 +22,9 @@ public class Dialogue : MonoBehaviour {
 			TriggerDialogue (textFile);
 
 		}
+
+		panel = uiText.transform.parent.gameObject;
+		StartCoroutine (showPanel());
 	}
 	
 	// Update is called once per frame
@@ -35,31 +38,45 @@ public class Dialogue : MonoBehaviour {
 		}
 	}
 
-	void Empty(){
-
-	}
-
 	public void Next(){
 		if (lineNumber < dialogueLines.Length - 1) {
 			float stayTime = 0;
 			StartCoroutine (FadeTo (0, stayTime, true));
 		} else {
-			lineNumber = -1;
+			//no more dialogue.  back to bizznizz
 			float stayTime = 0;
-			StartCoroutine (FadeTo (0, stayTime, true));
+
+			if (uiText.text != "") {
+				uiText.text = "";
+				StartCoroutine (hidePanel ());
+			}
 		}
 	}
 
-	public void TriggerDialogue(TextAsset txt){
-		if (textFile != txt) {
-			lineNumber = -1;
+	public void TriggerDialogue(TextAsset txt, bool random = false){
+
+		if (random) {
+			StopCoroutine (hidePanel ());
+			StartCoroutine (showPanel ());
 			textFile = txt;
 			dialogueLines = (textFile.text.Split ("\n" [0]));
-			FadeTo (1, 0.1f, false);
-
-		} else {
+			lineNumber = Mathf.RoundToInt(Random.Range(0, dialogueLines.Length) -1);
 			Next ();
+			StartCoroutine (hidePanel ());
+		} else {
+			if (textFile != txt) {
+				lineNumber = -1;
+				textFile = txt;
+				dialogueLines = (textFile.text.Split ("\n" [0]));
+				FadeTo (1, 0.1f, false);
+				Next ();
+				StartCoroutine (showPanel ());
+
+			} else {
+				Next ();
+			}
 		}
+		uiText.transform.parent.gameObject.SetActive (true);
 	}
 
 	IEnumerator FadeTo(float aValue, float aTime, bool changeText)
@@ -79,5 +96,23 @@ public class Dialogue : MonoBehaviour {
 			yield return new WaitForSeconds (aTime);
 			StartCoroutine (FadeTo (1, 1f, false));
 		}
+	}
+
+	IEnumerator hidePanel(){
+		//uiText.transform.parent.gameObject.SetActive (false);
+
+		Animation ani = panel.transform.GetComponent<Animation> ();
+
+		ani.Play ("panelSlideOut");
+		yield return null;
+	}
+
+	IEnumerator showPanel(){
+		//uiText.transform.parent.gameObject.SetActive (false);
+
+		Animation ani = panel.transform.GetComponent<Animation> ();
+
+		ani.Play ("panelSlideIn");
+		yield return null;
 	}
 }

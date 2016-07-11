@@ -25,8 +25,9 @@ public class PlayerStats : MonoBehaviour {
 			GameObject clone = (GameObject) Instantiate (hurtParticle, transform.position, Quaternion.Euler(new Vector3(0, 0, Random.Range(0, 360))));
 			Destroy (clone, 0.2f);
 
-			textBox.GetComponent<Dialogue> ().TriggerDialogue (ouchText);
 
+			// use this to trigger dialogue!
+			//textBox.GetComponent<Dialogue> ().TriggerDialogue (ouchText, true);
 
 			if (health <= 0) {
 				Die ();
