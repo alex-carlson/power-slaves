@@ -15,6 +15,6 @@ public class cameraMovement : MonoBehaviour {
 	void Update () {
 		Vector3 dir = player.transform.position - transform.position;
 
-		transform.position = Vector3.SmoothDamp (transform.position + (dir / 4) + (Vector3.back * 20), player.transform.position + (Vector3.back * 20), ref velocity, 2f);
+		transform.position = Vector3.SmoothDamp (transform.position + (dir / 8) + (Vector3.back * 20), player.transform.position + (Vector3.back * 20), ref velocity, 2f);
 	}
 }

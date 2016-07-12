@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
 
 public class Movement : MonoBehaviour {
 
@@ -11,6 +12,11 @@ public class Movement : MonoBehaviour {
 	float y;
 	public GameObject objectiveMenu;
 	float quitTime = 0;
+
+	public bool p_dashBoost = false;
+	public bool p_tripleShot = false;
+	public bool p_speedBoost = false;
+	public bool p_armor = false;
 
 	Sprite[] playerSprites;
 	Texture2D playerSpriteSheet;
@@ -28,6 +34,12 @@ public class Movement : MonoBehaviour {
 		playerSprites = Resources.LoadAll<Sprite> ("playerAngles");
 		m_particle = transform.parent.GetComponent<ParticleSystem> ();
 		m_anim = GetComponent<Animator> ();
+
+		p_dashBoost = Convert.ToBoolean(PlayerPrefs.GetInt ("DashBoost"));
+		p_tripleShot = Convert.ToBoolean(PlayerPrefs.GetInt ("TripleShot"));
+		p_speedBoost = Convert.ToBoolean(PlayerPrefs.GetInt ("SpeedBoost"));
+		p_armor = Convert.ToBoolean(PlayerPrefs.GetInt ("Armor"));
+
 	}
 
 	// Update is called once per frame
@@ -97,6 +109,11 @@ public class Movement : MonoBehaviour {
 
 	void Move(float x, float y){
 
+		if (p_speedBoost) {
+			x *= 2f;
+			y *= 2f;
+		}
+
 		transform.parent.transform.Translate (new Vector3 (x * Speed, y * Speed, 0));
 		m_particle.startSize = new Vector3 (x, y, 0).magnitude;
 	}
@@ -125,12 +142,26 @@ public class Movement : MonoBehaviour {
 		isAttacking = true;
 		ExtensionMethods.m_Dir (playerDir);
 		Instantiate (atkParticle, transform.position+(ExtensionMethods.m_playerDir * 20), Quaternion.identity);
+
+		if(p_tripleShot){
+			Vector3 v = ExtensionMethods.m_playerDir;
+			Vector3 rgt = Vector3.Cross (v, Vector3.forward);
+			Vector3 lft = -rgt;
+
+			Instantiate (atkParticle, transform.position + (ExtensionMethods.m_playerDir * 15) + rgt * 10, Quaternion.Euler(ExtensionMethods.m_playerDir));
+			Instantiate (atkParticle, transform.position + (ExtensionMethods.m_playerDir * 15) + lft * 10, Quaternion.Euler(ExtensionMethods.m_playerDir));
+		}
+
 		yield return new WaitForSeconds (0.1f);
 		isAttacking = false;
 	}
 
 	IEnumerator Block(){
 		isBlocking = true;
+		if (!p_dashBoost) {
+			yield return new WaitForSeconds (0.4f);
+		}
+		transform.parent.transform.Translate (new Vector3 (x * (Speed * 25), y * (Speed * 25), 0));
 		yield return new WaitForSeconds (0.2f);
 		isBlocking = false;
 	}
@@ -155,6 +186,6 @@ public class Movement : MonoBehaviour {
 	}
 
 	float knockback(){
-		return Random.Range (0.05f, 0.5f);
+		return UnityEngine.Random.Range (0.05f, 0.5f);
 	}
 }

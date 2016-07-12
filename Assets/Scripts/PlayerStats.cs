@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class PlayerStats : MonoBehaviour {
 
@@ -10,7 +11,19 @@ public class PlayerStats : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-	
+		PlayerPrefs.DeleteAll ();
+
+		// debug all powerups code
+//		PlayerPrefs.SetInt ("DashBoost", 1);
+//		PlayerPrefs.SetInt ("TripleShot", 1);
+//		PlayerPrefs.SetInt ("SpeedBoost", 1);
+//		PlayerPrefs.SetInt ("Armor", 1);
+
+		if (PlayerPrefs.GetInt ("Armor") != 0) {
+			health = health + 100;
+		}
+
+		GameObject.Find ("Health").GetComponent<Text> ().text = health + "";
 	}
 	
 	// Update is called once per frame
@@ -20,7 +33,8 @@ public class PlayerStats : MonoBehaviour {
 
 	void OnCollisionEnter2D(Collision2D col){
 		if (col.transform.tag == "Enemy" && !transform.GetComponentInChildren<Movement>().isAttacking) {
-			health -= 1;
+			health -= 25;
+			GameObject.Find ("Health").GetComponent<Text> ().text = health + "";
 			transform.GetComponentInChildren<Movement>().StartCoroutine("Blink");
 			GameObject clone = (GameObject) Instantiate (hurtParticle, transform.position, Quaternion.Euler(new Vector3(0, 0, Random.Range(0, 360))));
 			Destroy (clone, 0.2f);

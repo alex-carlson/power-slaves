@@ -90,22 +90,6 @@ public class enemyAI : MonoBehaviour {
 
 		if (playerDist > followDistance) {
 			rb.AddForce (dir, fMode);
-			isShooting = false;
-		}
-
-		if (playerDist < shootDistance) {
-			if (type == enemyType.Ranged) {
-				// check if we are in view of target
-
-				//TODO: add raycast check
-
-				// shoot at target!
-
-				if (isShooting == false) {
-					isShooting = true;
-					InvokeRepeating ("Fire", 0, 0.25f);
-				}
-			} 
 		}
 
 		float dist = Vector3.Distance (transform.position, path.vectorPath [currentWaypoint]);
@@ -127,11 +111,36 @@ public class enemyAI : MonoBehaviour {
 		}
 
 		playerDist = Vector3.Distance (transform.position, target.transform.position);
+
+		if (playerDist > shootDistance) {
+			StopCoroutine ("Fire");
+			isShooting = false;
+			return;
+		} else {
+			// check if we are in view of target
+
+			if (type == enemyType.Ranged) {
+
+				//TODO: add raycast check
+
+				// shoot at target!
+
+				if (isShooting) {
+					return;
+				} else {
+					StartCoroutine ("Fire");
+				}
+			}
+		}
 	}
 
-	void Fire(){
-		Vector3 instPos =  target.position - transform.position;
-		Instantiate (weapon, instPos, Quaternion.Euler (instPos.normalized));
+	IEnumerator Fire(){
+		isShooting = true;
+		Vector3 dir =  target.position - transform.position;
+		Instantiate (weapon, transform.position+dir.normalized, Quaternion.identity);
+		yield return new WaitForSeconds (1.5f);
+		isShooting = false;
+		StartCoroutine ("Fire");
 	}
 
 	void OnCollisionEnter2D(Collision2D col){
