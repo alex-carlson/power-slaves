@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System;
+using UnityEngine.UI;
 
 public class Movement : MonoBehaviour {
 
@@ -51,6 +52,7 @@ public class Movement : MonoBehaviour {
 		p_armor = Convert.ToBoolean(PlayerPrefs.GetInt ("Armor"));
 		rb = transform.parent.GetComponent<Rigidbody2D> ();
 
+        transform.position = Vector3.zero;
 	}
 
 	// Update is called once per frame
@@ -73,6 +75,10 @@ public class Movement : MonoBehaviour {
 
 		if (Input.GetKey (KeyCode.Q)) {
 			objectiveMenu.SetActive (true);
+            if (p_dashBoost)
+            {
+                objectiveMenu.transform.GetChild(0).GetComponent<Text>().color = Color.green;
+            }
 		} else {
 			objectiveMenu.SetActive (false);
 		}
@@ -120,7 +126,7 @@ public class Movement : MonoBehaviour {
 
 	void OnLevelWasLoaded(){
 		if (entrance != "") {
-			transform.position = GameObject.Find (entrance).transform.position;
+			transform.parent.transform.position = GameObject.Find (entrance).transform.position;
 		}
 	}
 

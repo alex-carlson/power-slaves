@@ -36,12 +36,11 @@ public class enemyAI : MonoBehaviour {
 		rb = GetComponent<Rigidbody2D> ();
 
 		if (target == null) {
-			target = GameObject.FindGameObjectWithTag ("Player").transform;
-		}
-			
-		seeker.StartPath(transform.position, target.position, OnPathComplete);
-
-		StartCoroutine (UpdatePath());
+            StartCoroutine(doAfterLoad());
+		} else
+        {
+            StartCoroutine(doAfterLoad());
+        }
 	}
 
 	IEnumerator UpdatePath(){
@@ -55,6 +54,15 @@ public class enemyAI : MonoBehaviour {
 		StartCoroutine (UpdatePath ());
 	
 	}
+
+    IEnumerator doAfterLoad()
+    {
+        yield return new WaitForSeconds(1);
+        target = GameObject.FindGameObjectWithTag("Player").transform;
+        seeker.StartPath(transform.position, target.position, OnPathComplete);
+
+        StartCoroutine(UpdatePath());
+    }
 
 	public void OnPathComplete(Path p){
 		if (!p.error) {

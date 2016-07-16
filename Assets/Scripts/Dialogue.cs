@@ -22,16 +22,7 @@ public class Dialogue : MonoBehaviour {
 			Destroy(this.gameObject);
 		}
 
-		if (textFile) {
-			//Regex.Match (textFile.text, @"\(([^)]*)\)").Groups [1].Value;
-
-			dialogueLines = (textFile.text.Split("\n"[0]));
-			TriggerDialogue (textFile);
-
-		}
-
 		panel = uiText.transform.parent.gameObject;
-		StartCoroutine (showPanel());
 	}
 	
 	// Update is called once per frame
@@ -48,6 +39,7 @@ public class Dialogue : MonoBehaviour {
 	public void Next(){
 		if (lineNumber < dialogueLines.Length - 1) {
 			float stayTime = 0;
+
 			StartCoroutine (FadeTo (0, stayTime, true));
 		} else {
 			//no more dialogue.  back to bizznizz
@@ -99,7 +91,16 @@ public class Dialogue : MonoBehaviour {
 		if (changeText) {
 			lineNumber++;
 			string dialogue = dialogueLines[lineNumber];
-			uiText.text = dialogue;
+
+            if (dialogue.Contains(":HOME:"))
+            {
+                lineNumber++;
+                FadeManager.Instance.LoadLevel("Home", 1.0f);
+            } else
+            {
+                uiText.text = dialogue;
+            }
+
 			yield return new WaitForSeconds (aTime);
 			StartCoroutine (FadeTo (1, 1f, false));
 		}

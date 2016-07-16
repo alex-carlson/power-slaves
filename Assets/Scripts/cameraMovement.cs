@@ -8,7 +8,8 @@ public class cameraMovement : MonoBehaviour {
 	private Vector3 velocity = Vector3.zero;
 
 	void Start(){
-		//m_Cam = GetComponent<Camera> ();
+        //m_Cam = GetComponent<Camera> ();
+        transform.position = GameObject.FindGameObjectWithTag("Player").transform.position;
 	}
 	
 	// Update is called once per frame

@@ -105,9 +105,9 @@ public class FadeManager : MonoBehaviour
 	/// </summary>
 	/// <param name='scene'>シーン名</param>
 	/// <param name='interval'>暗転にかかる時間(秒)</param>
-	public void LoadLevel (string scene, float interval)
+	public void LoadLevel (string scene, float interval, string entrance = "")
 	{
-		StartCoroutine (TransScene (scene, interval));
+		StartCoroutine (TransScene (scene, interval, entrance));
 	}
 
 	/// <summary>
@@ -115,7 +115,7 @@ public class FadeManager : MonoBehaviour
 	/// </summary>
 	/// <param name='scene'>シーン名</param>
 	/// <param name='interval'>暗転にかかる時間(秒)</param>
-	private IEnumerator TransScene (string scene, float interval)
+	private IEnumerator TransScene (string scene, float interval, string entrance = "")
 	{
 		//だんだん暗く .
 		this.isFading = true;
@@ -128,6 +128,7 @@ public class FadeManager : MonoBehaviour
 		
 		//シーン切替 .
 		SceneManager.LoadScene (scene);
+        LevelManager.loadLevel(entrance);
 		
 		//だんだん明るく .
 		time = 0;
