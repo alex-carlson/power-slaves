@@ -8,16 +8,21 @@ public class PlayerStats : MonoBehaviour {
 	public GameObject hurtParticle;
 	public TextAsset ouchText;
 	public GameObject textBox;
+	AudioSource m_audio;
+	Rigidbody2D rb;
 
 	// Use this for initialization
 	void Start () {
-		PlayerPrefs.DeleteAll ();
-
 		// debug all powerups code
 //		PlayerPrefs.SetInt ("DashBoost", 1);
 //		PlayerPrefs.SetInt ("TripleShot", 1);
 //		PlayerPrefs.SetInt ("SpeedBoost", 1);
 //		PlayerPrefs.SetInt ("Armor", 1);
+
+		m_audio = GetComponent<AudioSource> ();
+		rb = GetComponent<Rigidbody2D> ();
+
+		textBox = GameObject.Find ("Panel").transform.GetChild (0).gameObject;
 
 		if (PlayerPrefs.GetInt ("Armor") != 0) {
 			health = health + 100;
@@ -28,7 +33,7 @@ public class PlayerStats : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	
+		m_audio.volume = rb.velocity.magnitude * 0.02f;
 	}
 
 	void OnCollisionEnter2D(Collision2D col){

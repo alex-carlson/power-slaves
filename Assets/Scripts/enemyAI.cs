@@ -46,7 +46,7 @@ public class enemyAI : MonoBehaviour {
 
 	IEnumerator UpdatePath(){
 		if (target == null) {
-			return false;
+			yield return false;
 		}
 
 		seeker.StartPath(transform.position, target.position, OnPathComplete);
@@ -108,6 +108,10 @@ public class enemyAI : MonoBehaviour {
 		if (health <= 0) {
 			Die ();
 			return;
+		}
+
+		if (target == null) {
+			target = GameObject.FindGameObjectWithTag ("Player").transform;
 		}
 
 		playerDist = Vector3.Distance (transform.position, target.transform.position);

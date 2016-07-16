@@ -12,6 +12,8 @@ public class Movement : MonoBehaviour {
 	float y;
 	public GameObject objectiveMenu;
 	float quitTime = 0;
+	Rigidbody2D rb;
+	[HideInInspector] public string entrance;
 
 	public bool p_dashBoost = false;
 	public bool p_tripleShot = false;
@@ -30,15 +32,24 @@ public class Movement : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		DontDestroyOnLoad (this.transform.parent.gameObject);
+
+		if (FindObjectsOfType(GetType()).Length > 1)
+		{
+			Destroy(transform.root.gameObject);
+		}
+
 		m_Sprite = GetComponent<SpriteRenderer> ();
 		playerSprites = Resources.LoadAll<Sprite> ("playerAngles");
 		m_particle = transform.parent.GetComponent<ParticleSystem> ();
 		m_anim = GetComponent<Animator> ();
+		objectiveMenu = GameObject.Find ("Objectives");
 
 		p_dashBoost = Convert.ToBoolean(PlayerPrefs.GetInt ("DashBoost"));
 		p_tripleShot = Convert.ToBoolean(PlayerPrefs.GetInt ("TripleShot"));
 		p_speedBoost = Convert.ToBoolean(PlayerPrefs.GetInt ("SpeedBoost"));
 		p_armor = Convert.ToBoolean(PlayerPrefs.GetInt ("Armor"));
+		rb = transform.parent.GetComponent<Rigidbody2D> ();
 
 	}
 
@@ -107,14 +118,21 @@ public class Movement : MonoBehaviour {
 		Move (x, y);
 	}
 
+	void OnLevelWasLoaded(){
+		if (entrance != "") {
+			transform.position = GameObject.Find (entrance).transform.position;
+		}
+	}
+
 	void Move(float x, float y){
 
 		if (p_speedBoost) {
-			x *= 2f;
-			y *= 2f;
+			x *= 1.6f;
+			y *= 1.6f;
 		}
 
-		transform.parent.transform.Translate (new Vector3 (x * Speed, y * Speed, 0));
+		//transform.parent.transform.Translate (new Vector3 (x * Speed, y * Speed, 0));
+		rb.AddForce (new Vector3 (x * Speed, y * Speed, x * Speed), ForceMode2D.Impulse);
 		m_particle.startSize = new Vector3 (x, y, 0).magnitude;
 	}
 
@@ -161,7 +179,8 @@ public class Movement : MonoBehaviour {
 		if (!p_dashBoost) {
 			yield return new WaitForSeconds (0.4f);
 		}
-		transform.parent.transform.Translate (new Vector3 (x * (Speed * 25), y * (Speed * 25), 0));
+		GetComponent<AudioSource> ().Play ();
+		transform.parent.transform.Translate (new Vector3 (x * (Speed * 10), y * (Speed * 10), 0));
 		yield return new WaitForSeconds (0.2f);
 		isBlocking = false;
 	}

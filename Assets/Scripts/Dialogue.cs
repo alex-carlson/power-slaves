@@ -15,6 +15,13 @@ public class Dialogue : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		DontDestroyOnLoad (this.gameObject);
+
+		if (FindObjectsOfType(GetType()).Length > 1)
+		{
+			Destroy(this.gameObject);
+		}
+
 		if (textFile) {
 			//Regex.Match (textFile.text, @"\(([^)]*)\)").Groups [1].Value;
 
@@ -44,7 +51,7 @@ public class Dialogue : MonoBehaviour {
 			StartCoroutine (FadeTo (0, stayTime, true));
 		} else {
 			//no more dialogue.  back to bizznizz
-			float stayTime = 0;
+			//float stayTime = 0;
 
 			if (uiText.text != "") {
 				uiText.text = "";
