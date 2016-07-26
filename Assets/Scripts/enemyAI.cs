@@ -27,42 +27,30 @@ public class enemyAI : MonoBehaviour {
 	private int currentWaypoint = 0;
 	private float playerDist = 300;
 	bool isShooting = false;
+    public bool isAttacking = false;
 
 	public GameObject weapon;
 
 
 	void Start(){
 		seeker = GetComponent<Seeker> ();
-		rb = GetComponent<Rigidbody2D> ();
-
-		if (target == null) {
-            StartCoroutine(doAfterLoad());
-		} else
-        {
-            StartCoroutine(doAfterLoad());
-        }
-	}
-
-	IEnumerator UpdatePath(){
-		if (target == null) {
-			yield return false;
-		}
-
-		seeker.StartPath(transform.position, target.position, OnPathComplete);
-
-		yield return new WaitForSeconds (1f / updateRate);
-		StartCoroutine (UpdatePath ());
-	
-	}
-
-    IEnumerator doAfterLoad()
-    {
-        yield return new WaitForSeconds(1);
-        target = GameObject.FindGameObjectWithTag("Player").transform;
-        seeker.StartPath(transform.position, target.position, OnPathComplete);
+        rb = GetComponent<Rigidbody2D>();
 
         StartCoroutine(UpdatePath());
+
+
     }
+
+	IEnumerator UpdatePath(){
+        yield return new WaitForSeconds(1f / updateRate);
+
+        if(target == null)
+            target = GameObject.FindGameObjectWithTag("Player").transform;
+
+        seeker.StartPath(transform.position, target.position, OnPathComplete);
+        StartCoroutine (UpdatePath ());
+	
+	}
 
 	public void OnPathComplete(Path p){
 		if (!p.error) {
@@ -75,9 +63,8 @@ public class enemyAI : MonoBehaviour {
 		if (target == null)
 			return;
 
-		if (playerDist > 200)
-			return;
-		
+        if (playerDist > 200)
+            return;
 
 		if (path == null)
 			return;
@@ -142,7 +129,16 @@ public class enemyAI : MonoBehaviour {
 				} else {
 					StartCoroutine ("Fire");
 				}
-			}
+			} else
+            {
+                if (isAttacking)
+                {
+                    return;
+                } else
+                {
+                    StartCoroutine("Attack");
+                }
+            }
 		}
 	}
 
@@ -155,17 +151,36 @@ public class enemyAI : MonoBehaviour {
 		StartCoroutine ("Fire");
 	}
 
+    IEnumerator Attack()
+    {
+        isAttacking = true;
+        GetComponentInChildren<SpriteRenderer>().color = Color.red;
+        Vector3 dir = target.position - transform.position;
+        rb.AddForce(dir / 10, ForceMode2D.Impulse);
+        yield return new WaitForSeconds(0.3f);
+        GetComponentInChildren<SpriteRenderer>().color = Color.white;
+        yield return new WaitForSeconds(2f);
+        isShooting = false;
+        StartCoroutine("Attack");
+    }
+
 	void OnCollisionEnter2D(Collision2D col){
-		if (col.transform.tag == "Bullet") {
-			health -= 25;
-			Vector3 dir = (transform.position - col.transform.position);
-			rb.AddForce (dir.normalized * 10, ForceMode2D.Impulse);
-			Destroy (col.transform.gameObject, 0.2f);
-		} else if (col.transform.tag == "Player") {
-			Vector3 dir = (transform.position - col.transform.position);
-			col.transform.GetComponent<Rigidbody2D> ().AddForce (-dir.normalized * 100, ForceMode2D.Impulse);
-		}
-	}
+        if (col.transform.tag == "Bullet") {
+            health -= 25;
+            Vector3 dir = (transform.position - col.transform.position);
+            rb.AddForce(dir.normalized * 10, ForceMode2D.Impulse);
+            Destroy(col.transform.gameObject, 0.2f);
+        } else if (col.transform.tag == "Player") {
+            if (!isAttacking)
+            {
+
+                Vector3 dir = (transform.position - col.transform.position);
+                col.transform.GetComponent<Rigidbody2D>().AddForce(-dir.normalized * 100, ForceMode2D.Impulse);
+
+            }
+
+            }
+        }
 
 	void Die(){
 		Destroy (this.gameObject);

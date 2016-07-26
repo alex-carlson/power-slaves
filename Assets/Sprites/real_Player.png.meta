@@ -1,0 +1,219 @@
+fileFormatVersion: 2
+guid: 53589a86a7c273246b1e74d62946f8ab
+timeCreated: 1468896060
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: real_Player_0
+    21300002: real_Player_1
+    21300004: real_Player_2
+    21300006: real_Player_3
+    21300008: real_Player_4
+    21300010: real_Player_5
+    21300012: real_Player_6
+    21300014: real_Player_7
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 7
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: 0
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  allowsAlphaSplitting: 0
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 2
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    sprites:
+    - name: real_Player_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 336
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -5, y: 16}
+        - {x: -10, y: 5}
+        - {x: -10, y: -17}
+        - {x: -3, y: -18}
+        - {x: 12, y: -18}
+        - {x: 17, y: -14}
+        - {x: 17, y: -3}
+        - {x: 9, y: 16}
+    - name: real_Player_1
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 336
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -9, y: -16}
+        - {x: -6, y: -18}
+        - {x: 7, y: -18}
+        - {x: 20, y: -11}
+        - {x: 20, y: -1}
+        - {x: 8, y: 16}
+        - {x: -6, y: 16}
+        - {x: -9, y: 7}
+    - name: real_Player_2
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 336
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -8, y: 16}
+        - {x: -8, y: -18}
+        - {x: 12, y: -18}
+        - {x: 21, y: -11}
+        - {x: 21, y: 9}
+        - {x: 15, y: 16}
+    - name: real_Player_3
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 336
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -8, y: 16}
+        - {x: -8, y: -18}
+        - {x: 4, y: -18}
+        - {x: 21, y: 2}
+        - {x: 21, y: 7}
+        - {x: 4, y: 16}
+    - name: real_Player_4
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 336
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -3, y: 16}
+        - {x: -7, y: 10}
+        - {x: -11, y: -8}
+        - {x: -11, y: -17}
+        - {x: -9, y: -18}
+        - {x: 1, y: -18}
+        - {x: 9, y: -16}
+        - {x: 21, y: 1}
+        - {x: 21, y: 16}
+    - name: real_Player_5
+      rect:
+        serializedVersion: 2
+        x: 240
+        y: 336
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -5, y: 16}
+        - {x: -6, y: 13}
+        - {x: -10, y: -6}
+        - {x: -10, y: -15}
+        - {x: -6, y: -17}
+        - {x: 8, y: -17}
+        - {x: 20, y: 0}
+        - {x: 20, y: 15}
+        - {x: 16, y: 16}
+    - name: real_Player_6
+      rect:
+        serializedVersion: 2
+        x: 288
+        y: 336
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 11, y: 2}
+        - {x: 7, y: 15}
+        - {x: 5, y: 16}
+        - {x: -6, y: 16}
+        - {x: -9, y: 5}
+        - {x: -9, y: -15}
+        - {x: -6, y: -17}
+        - {x: 6, y: -17}
+        - {x: 21, y: -2}
+        - {x: 21, y: 0}
+        - {x: 20, y: 3}
+    - name: real_Player_7
+      rect:
+        serializedVersion: 2
+        x: 336
+        y: 336
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 5, y: 16}
+        - {x: -6, y: 16}
+        - {x: -8, y: 3}
+        - {x: -8, y: -14}
+        - {x: -1, y: -17}
+        - {x: 8, y: -17}
+        - {x: 21, y: -8}
+        - {x: 21, y: -6}
+        - {x: 19, y: 3}
+    outline: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -15,6 +15,7 @@ public class Movement : MonoBehaviour {
 	float quitTime = 0;
 	Rigidbody2D rb;
 	[HideInInspector] public string entrance;
+    public LayerMask layerMask;
 
 	public bool p_dashBoost = false;
 	public bool p_tripleShot = false;
@@ -122,7 +123,7 @@ public class Movement : MonoBehaviour {
 		x = Input.GetAxis ("Horizontal");
 		y = Input.GetAxis ("Vertical");
 		Move (x, y);
-	}
+    }
 
 	void OnLevelWasLoaded(){
 		if (entrance != "") {
@@ -180,16 +181,21 @@ public class Movement : MonoBehaviour {
 		isAttacking = false;
 	}
 
-	IEnumerator Block(){
-		isBlocking = true;
-		if (!p_dashBoost) {
-			yield return new WaitForSeconds (0.4f);
-		}
-		GetComponent<AudioSource> ().Play ();
-		transform.parent.transform.Translate (new Vector3 (x * (Speed * 10), y * (Speed * 10), 0));
-		yield return new WaitForSeconds (0.2f);
-		isBlocking = false;
-	}
+    IEnumerator Block() {
+        isBlocking = true;
+
+        GetComponent<AudioSource>().Play();
+        rb.AddForce(new Vector3(x * (Speed * 100), y * (Speed * 100), 0), ForceMode2D.Impulse);
+
+        yield return new WaitForSeconds(0.2f);
+
+        if (!p_dashBoost)
+        {
+            yield return new WaitForSeconds(0.4f);
+        }
+
+        isBlocking = false;
+    }
 
 	IEnumerator Blink(){
 		SpriteRenderer sp = GetComponent<SpriteRenderer> ();

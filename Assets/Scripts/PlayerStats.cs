@@ -37,7 +37,7 @@ public class PlayerStats : MonoBehaviour {
 	}
 
 	void OnCollisionEnter2D(Collision2D col){
-		if (col.transform.tag == "Enemy" && !transform.GetComponentInChildren<Movement>().isAttacking) {
+		if (col.transform.tag == "Enemy" && !transform.GetComponentInChildren<Movement>().isAttacking && col.transform.GetComponent<enemyAI>().isAttacking) {
 			health -= 25;
             GameObject.Find("Health").GetComponent<Text>().color = Color.white;
             GameObject.Find ("Health").GetComponent<Text> ().text = health + "";

@@ -8,7 +8,7 @@ public class LevelManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		PlayerPrefs.SetInt ("LastLevel", SceneManager.GetActiveScene ().buildIndex);
+		//PlayerPrefs.SetInt ("LastLevel", SceneManager.GetActiveScene ().buildIndex);
 		DontDestroyOnLoad(transform.gameObject);
         Instantiate(player, Vector3.zero, Quaternion.identity);
     }
