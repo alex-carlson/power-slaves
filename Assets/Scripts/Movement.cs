@@ -5,7 +5,8 @@ using UnityEngine.UI;
 
 public class Movement : MonoBehaviour {
 
-	public int Speed = 5;
+	public int Speed = 15;
+    public int maxSpeed = 5;
 	public GameObject atkParticle;
 	public GameObject hurtParticle;
 	Direction playerDir = Direction.S;
@@ -43,7 +44,7 @@ public class Movement : MonoBehaviour {
 
 		m_Sprite = GetComponent<SpriteRenderer> ();
 		playerSprites = Resources.LoadAll<Sprite> ("playerAngles");
-		m_particle = transform.parent.GetComponent<ParticleSystem> ();
+        m_particle = transform.parent.GetComponent<ParticleSystem>();
 		m_anim = GetComponent<Animator> ();
 		objectiveMenu = GameObject.Find ("Objectives");
 
@@ -139,8 +140,13 @@ public class Movement : MonoBehaviour {
 		}
 
 		//transform.parent.transform.Translate (new Vector3 (x * Speed, y * Speed, 0));
-		rb.AddForce (new Vector3 (x * Speed, y * Speed, x * Speed), ForceMode2D.Impulse);
-		m_particle.startSize = new Vector3 (x, y, 0).magnitude;
+
+        if(rb.velocity.magnitude < maxSpeed)
+        {
+            rb.AddForce(new Vector3(x * Speed, y * Speed, x * Speed), ForceMode2D.Impulse);
+            m_particle.startSize = new Vector3(x, y, 0).magnitude;
+            m_particle.emissionRate = rb.velocity.magnitude * 0.05f;
+        }
 	}
 
 	void SpriteSwap(){
