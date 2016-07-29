@@ -8,6 +8,7 @@ public class PlayerStats : MonoBehaviour {
 	public GameObject hurtParticle;
 	public TextAsset ouchText;
 	public GameObject textBox;
+    public AudioClip deathSound;
 	AudioSource m_audio;
 	Rigidbody2D rb;
 
@@ -37,7 +38,7 @@ public class PlayerStats : MonoBehaviour {
 	}
 
 	void OnCollisionEnter2D(Collision2D col){
-		if (col.transform.tag == "Enemy" && !transform.GetComponentInChildren<Movement>().isAttacking && col.transform.GetComponent<enemyAI>().isAttacking) {
+		if (col.transform.tag == "Enemy" && col.transform.GetComponent<enemyAI>().isAttacking) {
 			health -= 25;
             GameObject.Find("Health").GetComponent<Text>().color = Color.white;
             GameObject.Find ("Health").GetComponent<Text> ().text = health + "";
@@ -45,22 +46,35 @@ public class PlayerStats : MonoBehaviour {
 			GameObject clone = (GameObject) Instantiate (hurtParticle, transform.position, Quaternion.Euler(new Vector3(0, 0, Random.Range(0, 360))));
 			Destroy (clone, 0.2f);
 
+		} else if (col.transform.tag == "EnemyBullet")
+        {
+            health -= 25;
+            GameObject.Find("Health").GetComponent<Text>().color = Color.white;
+            GameObject.Find("Health").GetComponent<Text>().text = health + "";
+            transform.GetComponentInChildren<Movement>().StartCoroutine("Blink");
+            GameObject clone = (GameObject)Instantiate(hurtParticle, transform.position, Quaternion.Euler(new Vector3(0, 0, Random.Range(0, 360))));
+            Destroy(clone, 0.2f);
+        }
 
-			// use this to trigger dialogue!
-			//textBox.GetComponent<Dialogue> ().TriggerDialogue (ouchText, true);
+        // use this to trigger dialogue!
+        //textBox.GetComponent<Dialogue> ().TriggerDialogue (ouchText, true);
 
-            if(health <= 25)
-            {
-                GameObject.Find("Health").GetComponent<Text>().color = Color.red;
-            }
+        if (health <= 25)
+        {
+            GameObject.Find("Health").GetComponent<Text>().color = Color.red;
+            GameObject.Find("Health").GetComponent<Text>().text = 0 + "";
+        }
 
-			if (health <= 0) {
-				Die ();
-			}
-		}
-	}
+        if (health <= 0)
+        {
+            Die();
+        }
+    }
 
 	void Die(){
-		Destroy (this.gameObject);
+        GetComponent<AudioSource>().clip = deathSound;
+        GetComponent<AudioSource>().volume = 1;
+        GetComponent<AudioSource>().Play();
+		Destroy (this.gameObject, 1f);
 	}
 }

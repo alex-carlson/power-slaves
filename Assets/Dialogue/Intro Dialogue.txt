@@ -36,9 +36,9 @@ Stryg: And you, human… Might I ask for your name?
 Stryg: Ah. [NAME]. That is a very… Interesting name.
 Stryg: Very well, [NAME]. We will be waiting here until you return with all four items. Should you grow weary in your efforts, we will offer you a place of respite  and a rejuvenation tank to nurse you back to health.
 Stryg: Good luck and godspeed, [NAME].
+[CENTER](WASD to move)
+[CENTER](PRESS M to fire)
+[CENTER](PRESS N to dash)
+[CENTER](HOLD Q to view objectives)
+[CENTER](HOLD ESC to quit)
 :ENABLE_CONROLS:
-(WASD to move)
-(PRESS M to fire)
-(PRESS N to dash)
-(HOLD Q to view objectives)
-(HOLD ESC to quit)

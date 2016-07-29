@@ -1,0 +1,6 @@
+[NAME]: This must be some ancient relic from a creature long extinct.
+[NAME]: I can feel energy radiating from it.
+:HOME:
+[NAME]: Hopefully that's what Styrg was looking for.
+[NAME]: I feel like that fossil changed me somehow.
+[CENTER]*got Triple Shot*

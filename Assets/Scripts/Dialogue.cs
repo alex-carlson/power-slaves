@@ -31,7 +31,7 @@ public class Dialogue : MonoBehaviour {
         if (PlayerPrefs.GetInt("LastLevel") == -1)
         {
             TriggerDialogue(newGameText);
-            GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<Movement>().Speed = 0;
+            GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<Movement>().isActive = false;
             PlayerPrefs.SetInt("LastLevel", SceneManager.GetActiveScene().buildIndex);
         }
 	}
@@ -113,21 +113,34 @@ public class Dialogue : MonoBehaviour {
             {
                 lineNumber++;
                 FadeManager.Instance.LoadLevel("Home", 1.0f);
-            } else if (dialogue.Contains(":ENABLE_CONROLS:")){
+            } else if (dialogue.Contains(":ENABLE_CONROLS:")) {
                 lineNumber++;
-                GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<Movement>().Speed = 5;
+                GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<Movement>().isActive = true;
             }
             else if (dialogue.Contains(":INPUT NAME:"))
             {
                 lineNumber++;
-                GameObject.Find("Name").GetComponentInChildren<Animation>().Play("panelSlideIn");
-            } else if(dialogue.Contains("[NAME]"))
-            {
-                Debug.Log("WE GOT A NAME, HERE!");
-                string d = dialogue.Replace("[NAME]", PlayerPrefs.GetString("Name"));
-                uiText.text = d;
+                GameObject.Find("Name").GetComponentInChildren<Animation>().Play("NameSlideIn");
             } else
             {
+                if (dialogue.Contains("[NAME]"))
+                {
+                    string d = dialogue.Replace("[NAME]", PlayerPrefs.GetString("Name"));
+                    uiText.text = d;
+                }
+
+                if (dialogue.Contains(name + ":") || dialogue.Contains("Mav:"))
+                {
+                    uiText.alignment = TextAnchor.UpperLeft;
+                }
+                else if (dialogue.Contains("[CENTER]")){
+                    string d = dialogue.Replace("[CENTER]", "");
+                    uiText.text = d;
+                    uiText.alignment = TextAnchor.UpperCenter;
+                } else
+                {
+                    uiText.alignment = TextAnchor.UpperRight;
+                }
                 uiText.text = dialogue;
             }
 
@@ -138,7 +151,7 @@ public class Dialogue : MonoBehaviour {
 
     public void SaveName()
     {
-        GameObject.Find("Name").GetComponent<Animation>().Play("panelSlideOut");
+        GameObject.Find("Name").GetComponent<Animation>().Play("NameSlideOut");
         PlayerPrefs.SetString("Name", GameObject.Find("Name").GetComponentInChildren<Text>().text);
         name = GameObject.Find("Name").GetComponentInChildren<Text>().text;
         Debug.Log("Player Name set to: "+name);

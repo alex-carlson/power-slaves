@@ -183,6 +183,7 @@ public class enemyAI : MonoBehaviour {
         }
 
 	void Die(){
-		Destroy (this.gameObject);
+        GetComponent<AudioSource>().Play();
+		Destroy (this.gameObject, 1);
 	}
 }

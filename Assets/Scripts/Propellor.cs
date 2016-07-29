@@ -18,7 +18,7 @@ public class Propellor : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		rb.AddForce (-dir * 4.25f, ForceMode2D.Force);
+		rb.AddForce (-dir * 2.25f, ForceMode2D.Force);
 	}
 
 	void OnCollisionEnter2D(Collision2D col){

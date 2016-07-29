@@ -5,8 +5,8 @@ using UnityEngine.UI;
 
 public class Movement : MonoBehaviour {
 
-	public int Speed = 15;
-    public int maxSpeed = 5;
+	public int Speed = 60;
+    public int maxSpeed = 220;
 	public GameObject atkParticle;
 	public GameObject hurtParticle;
 	Direction playerDir = Direction.S;
@@ -17,6 +17,7 @@ public class Movement : MonoBehaviour {
 	Rigidbody2D rb;
 	[HideInInspector] public string entrance;
     public LayerMask layerMask;
+    public bool isActive = true;
 
 	public bool p_dashBoost = false;
 	public bool p_tripleShot = false;
@@ -31,6 +32,7 @@ public class Movement : MonoBehaviour {
 
 	SpriteRenderer m_Sprite;
 	ParticleSystem m_particle;
+    ParticleSystem m_footsteps;
 	Animator m_anim;
 
 	// Use this for initialization
@@ -45,7 +47,8 @@ public class Movement : MonoBehaviour {
 		m_Sprite = GetComponent<SpriteRenderer> ();
 		playerSprites = Resources.LoadAll<Sprite> ("playerAngles");
         m_particle = transform.parent.GetComponent<ParticleSystem>();
-		m_anim = GetComponent<Animator> ();
+        m_footsteps = transform.GetComponentInChildren<ParticleSystem>();
+        m_anim = GetComponent<Animator> ();
 		objectiveMenu = GameObject.Find ("Objectives");
 
 		p_dashBoost = Convert.ToBoolean(PlayerPrefs.GetInt ("DashBoost"));
@@ -64,15 +67,20 @@ public class Movement : MonoBehaviour {
 		bool atk = Input.GetButtonDown ("Fire1");
 		bool block = Input.GetButtonDown ("Fire2");
 
-		m_anim.SetFloat ("x", x);
-		m_anim.SetFloat ("y", y);
+        if (isActive == true)
+        {
+            m_anim.SetFloat("x", x);
+            m_anim.SetFloat("y", y);
+        }
 	
 		if(atk && isAttacking == false) {
-			StartCoroutine ("Attack");
+            if (isActive == true)
+                StartCoroutine ("Attack");
 		}
 
 		if(block && isBlocking == false){
-			StartCoroutine("Block");
+            if (isActive == true)
+                StartCoroutine("Block");
 		}
 
 		if (Input.GetKey (KeyCode.Q)) {
@@ -97,33 +105,58 @@ public class Movement : MonoBehaviour {
 			quitTime = 0;
 		}
 
-		if (y == 0 && x == 0) {
-			return;
-		} else if (y > 0 && x == 0) {
-			playerDir = Direction.N;
-		} else if (y > 0 && x > 0) {
-			playerDir = Direction.NE;
-		} else if (y == 0 && x > 0) {
-			playerDir = Direction.E;
-		} else if (y < 0 && x > 0) {
-			playerDir = Direction.SE;
-		} else if (y < 0 && x == 0) {
-			playerDir = Direction.S;
-		} else if (y < 0 && x < 0) {
-			playerDir = Direction.SW;
-		} else if (y == 0 && x < 0) {
-			playerDir = Direction.W;
-		} else if (y > 0 && x < 0) {
-			playerDir = Direction.NW;
-		}
+        if (isActive == true)
+        {
+            if (y == 0 && x == 0)
+            {
+                return;
+            }
+            else if (y > 0 && x == 0)
+            {
+                playerDir = Direction.N;
+            }
+            else if (y > 0 && x > 0)
+            {
+                playerDir = Direction.NE;
+            }
+            else if (y == 0 && x > 0)
+            {
+                playerDir = Direction.E;
+            }
+            else if (y < 0 && x > 0)
+            {
+                playerDir = Direction.SE;
+            }
+            else if (y < 0 && x == 0)
+            {
+                playerDir = Direction.S;
+            }
+            else if (y < 0 && x < 0)
+            {
+                playerDir = Direction.SW;
+            }
+            else if (y == 0 && x < 0)
+            {
+                playerDir = Direction.W;
+            }
+            else if (y > 0 && x < 0)
+            {
+                playerDir = Direction.NW;
+            }
+        }
 
-		SpriteSwap ();
+
+        if(isActive == true)
+        {
+            SpriteSwap();
+        }
 	}
 
 	void FixedUpdate(){
 		x = Input.GetAxis ("Horizontal");
 		y = Input.GetAxis ("Vertical");
-		Move (x, y);
+        if (isActive == true)
+            Move (x, y);
     }
 
 	void OnLevelWasLoaded(){
@@ -145,7 +178,7 @@ public class Movement : MonoBehaviour {
         {
             rb.AddForce(new Vector3(x * Speed, y * Speed, x * Speed), ForceMode2D.Impulse);
             m_particle.startSize = new Vector3(x, y, 0).magnitude;
-            m_particle.emissionRate = rb.velocity.magnitude * 0.05f;
+            m_footsteps.emissionRate = rb.velocity.magnitude * 0.05f;
         }
 	}
 

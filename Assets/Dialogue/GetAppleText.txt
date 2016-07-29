@@ -1,6 +1,6 @@
-Woah, never seen one of these in person
-I can feel energy radiating from it.
+[NAME]: Woah, never seen one of these in person
+[NAME]: I can feel energy radiating from it.
 :HOME:
-Hopefully that's what Styrg was looking for.
-I feel like that apple changed me somehow.
-*dash speed increased*
+[NAME]:Hopefully that's what Styrg was looking for.
+[NAME]:I feel like that apple changed me somehow.
+[CENTER]*dash speed increased*

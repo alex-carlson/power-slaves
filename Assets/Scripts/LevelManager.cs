@@ -17,6 +17,7 @@ public class LevelManager : MonoBehaviour {
 		if (e != "") {
             GameObject plr = GameObject.FindGameObjectWithTag("Player");
 			plr.GetComponentInChildren<Movement> ().entrance = e;
+            plr.GetComponentInChildren<Movement>().isActive = true;
 		}
 	}
 }
