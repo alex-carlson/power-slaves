@@ -58,6 +58,7 @@ public class Movement : MonoBehaviour {
 		rb = transform.parent.GetComponent<Rigidbody2D> ();
 
         transform.position = Vector3.zero;
+		transform.parent.position = Vector3.zero;
 	}
 
 	// Update is called once per frame
@@ -89,6 +90,15 @@ public class Movement : MonoBehaviour {
             {
                 objectiveMenu.transform.GetChild(0).GetComponent<Text>().color = Color.green;
             }
+			if (p_tripleShot) {
+				objectiveMenu.transform.GetChild (1).GetComponent<Text> ().color = Color.green;
+			}
+			if (p_armor) {
+				objectiveMenu.transform.GetChild (2).GetComponent<Text> ().color = Color.green;
+			}
+			if (p_speedBoost) {
+				objectiveMenu.transform.GetChild (3).GetComponent<Text> ().color = Color.green;
+			}
 		} else {
 			objectiveMenu.SetActive (false);
 		}

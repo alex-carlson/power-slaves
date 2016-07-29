@@ -113,9 +113,11 @@ public class Dialogue : MonoBehaviour {
             {
                 lineNumber++;
                 FadeManager.Instance.LoadLevel("Home", 1.0f);
+				uiText.text = dialogue;
             } else if (dialogue.Contains(":ENABLE_CONROLS:")) {
                 lineNumber++;
                 GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<Movement>().isActive = true;
+				uiText.text = dialogue;
             }
             else if (dialogue.Contains(":INPUT NAME:"))
             {
@@ -128,20 +130,22 @@ public class Dialogue : MonoBehaviour {
                     string d = dialogue.Replace("[NAME]", PlayerPrefs.GetString("Name"));
                     uiText.text = d;
                 }
-
-                if (dialogue.Contains(name + ":") || dialogue.Contains("Mav:"))
+					
+                if (dialogue.Contains("[NAME]:") || dialogue.Contains("Mav:"))
                 {
+					string d = dialogue.Replace("[NAME]", PlayerPrefs.GetString("Name"));
+					uiText.text = d;
                     uiText.alignment = TextAnchor.UpperLeft;
-                }
-                else if (dialogue.Contains("[CENTER]")){
+                } else if (dialogue.Contains("[CENTER]")){
                     string d = dialogue.Replace("[CENTER]", "");
                     uiText.text = d;
                     uiText.alignment = TextAnchor.UpperCenter;
                 } else
                 {
+					string d = dialogue.Replace("[NAME]", PlayerPrefs.GetString("Name"));
+					uiText.text = d;
                     uiText.alignment = TextAnchor.UpperRight;
                 }
-                uiText.text = dialogue;
             }
 
 			yield return new WaitForSeconds (aTime);
