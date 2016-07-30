@@ -171,7 +171,7 @@ public class Movement : MonoBehaviour {
 
 	void OnLevelWasLoaded(){
 		if (entrance != "") {
-			transform.parent.transform.position = GameObject.Find (entrance).transform.position;
+			transform.parent.transform.position = GameObject.Find (entrance).transform.GetChild(0).transform.position;
 		}
 	}
 
@@ -234,7 +234,7 @@ public class Movement : MonoBehaviour {
         isBlocking = true;
 
         GetComponent<AudioSource>().Play();
-        rb.AddForce(new Vector3(x * (Speed * 100), y * (Speed * 100), 0), ForceMode2D.Impulse);
+        rb.AddForce(new Vector3(x * (Speed * 60), y * (Speed * 60), 0), ForceMode2D.Impulse);
 
         yield return new WaitForSeconds(0.2f);
 

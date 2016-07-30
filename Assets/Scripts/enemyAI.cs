@@ -12,6 +12,7 @@ public class enemyAI : MonoBehaviour {
 	public Transform target;
 	public float updateRate = 2f;
 	public enemyType type;
+	public GameObject healthPickup;
 
 	private Seeker seeker;
 	private Rigidbody2D rb;
@@ -183,7 +184,19 @@ public class enemyAI : MonoBehaviour {
         }
 
 	void Die(){
+		health = 9999;
         GetComponent<AudioSource>().Play();
+
+		int h = GameObject.FindGameObjectWithTag ("Player").GetComponent<PlayerStats> ().health;
+
+		if (h < 100) {
+			float r = Random.Range (0, 4);
+
+			if (r < 1) {
+				Instantiate (healthPickup, transform.position, Quaternion.identity);
+			}
+		}
+
 		Destroy (this.gameObject, 1);
 	}
 }

@@ -20,4 +20,9 @@ public class LevelManager : MonoBehaviour {
             plr.GetComponentInChildren<Movement>().isActive = true;
 		}
 	}
+
+	public static void GameOver(){
+		FadeManager.Instance.LoadLevel ("Menu", 1.0f);
+		SceneManager.UnloadScene (SceneManager.GetActiveScene().buildIndex);
+	}
 }
