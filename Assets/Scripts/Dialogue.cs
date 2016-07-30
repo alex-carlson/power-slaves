@@ -113,16 +113,16 @@ public class Dialogue : MonoBehaviour {
             {
                 lineNumber++;
                 FadeManager.Instance.LoadLevel("Home", 1.0f);
-				uiText.text = dialogue;
+                return false;
             } else if (dialogue.Contains(":ENABLE_CONROLS:")) {
                 lineNumber++;
                 GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<Movement>().isActive = true;
-				uiText.text = dialogue;
             }
             else if (dialogue.Contains(":INPUT NAME:"))
             {
                 lineNumber++;
                 GameObject.Find("Name").GetComponentInChildren<Animation>().Play("NameSlideIn");
+                return false;
             } else
             {
                 if (dialogue.Contains("[NAME]"))
