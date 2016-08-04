@@ -22,7 +22,12 @@ public class LevelManager : MonoBehaviour {
 	}
 
 	public static void GameOver(){
-		FadeManager.Instance.LoadLevel ("Menu", 1.0f);
+        foreach (GameObject o in Object.FindObjectsOfType<GameObject>())
+        {
+            Destroy(o);
+            return;
+        }
+        FadeManager.Instance.LoadLevel ("Menu", 1.0f);
 		SceneManager.UnloadScene (SceneManager.GetActiveScene().buildIndex);
 	}
 }

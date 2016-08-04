@@ -11,6 +11,8 @@ public class Dialogue : MonoBehaviour {
 	int lineNumber = -1;
     [HideInInspector]
     public string name = "Maverick";
+    private float skipTimer = 0f;
+    private float skipTime = 1.5f;
 
 	public Text uiText;
 	Canvas canvas;
@@ -42,9 +44,26 @@ public class Dialogue : MonoBehaviour {
 			lineNumber = -1;
 		}
 
+        if (Input.GetKey(KeyCode.Return))
+        {
+            skipTimer += 0.01f;
+        } else
+        {
+            skipTimer = 0;
+        }
+
 		if (Input.GetKeyDown (KeyCode.Return)) {
 			Next ();
 		}
+
+        if(skipTimer > skipTime)
+        {
+            uiText.text = "";
+            StartCoroutine(hidePanel());
+            GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<Movement>().isActive = true;
+            PlayerPrefs.SetString("Name", "Mav");
+            skipTimer = 0;
+        }
 	}
 
     public void TriggerDialogue(TextAsset txt, bool random = false)
@@ -112,6 +131,8 @@ public class Dialogue : MonoBehaviour {
             if (dialogue.Contains(":HOME:"))
             {
                 lineNumber++;
+                GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<Movement>().entrance = "";
+                GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerStats>().health = 100;
                 FadeManager.Instance.LoadLevel("Home", 1.0f);
                 return false;
             } else if (dialogue.Contains(":ENABLE_CONROLS:")) {
@@ -123,7 +144,29 @@ public class Dialogue : MonoBehaviour {
                 lineNumber++;
                 GameObject.Find("Name").GetComponentInChildren<Animation>().Play("NameSlideIn");
                 return false;
-            } else
+            }
+            else if(dialogue.Contains("[GOTAPPLE]"))
+            {
+                GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<Movement>().p_dashBoost = true;
+                PlayerPrefs.SetInt("DashBoost", 1);
+            }
+            else if (dialogue.Contains("[GOTFOSSIL]"))
+            {
+                GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<Movement>().p_tripleShot = true;
+                PlayerPrefs.SetInt("TripleShot", 1);
+            }
+            else if (dialogue.Contains("[GOTBOOK]"))
+            {
+                Debug.Log("Got a book, setting armor to true");
+                GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<Movement>().p_armor = true;
+                PlayerPrefs.SetInt("Armor", 1);
+            }
+            else if (dialogue.Contains("[GOTCOMPASS]"))
+            {
+                GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<Movement>().p_speedBoost = true;
+                PlayerPrefs.SetInt("SpeedBoost", 1);
+            }
+            else
             {
                 if (dialogue.Contains("[NAME]"))
                 {

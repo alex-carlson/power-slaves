@@ -10,6 +10,7 @@ public class MainMenu : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         PlayerPrefs.SetInt("LastLevel", SceneManager.GetActiveScene().buildIndex);
+        Destroy(GameObject.FindGameObjectWithTag("Player"));
     }
 
     void Update()

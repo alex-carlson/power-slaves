@@ -1,6 +1,14 @@
 [NAME]: This must be some ancient relic from a creature long extinct.
 [NAME]: I can feel energy radiating from it.
 :HOME:
-[NAME]: Hopefully that's what Styrg was looking for.
-[NAME]: I feel like that fossil changed me somehow.
+[GOTFOSSIL]
+stryg: what have you brought back for us? oh, a fossil, and in such an impeccable condition!
+stryg: that spiral... this must be a preserved specimen of the earth taxon you call ammonites, yes?
+[NAME]: uh, sure, i guess. i thought it was some kinda snail rock, but ammonias sounds smarter, so you`re probably right.
+stryg: it is a very mesmerizing animal to behold. the mathematics of earth biology are beautiful, indeed.
+[NAME]: you got a point there, mr. alien, `cause it might well be the prettiest damn rock i`ve ever seen.
+stryg: you still have (# of items) more items left to retrieve:
+(list of items)
+Stryg: do feel free to rest here for a moment and regain your strength before resuming your mission.
+Stryg: we are counting on you, [NAME]. you have our utmost faith in your capabilites. good luck.
 [CENTER]*got Triple Shot*

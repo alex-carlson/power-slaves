@@ -1,6 +1,16 @@
 [NAME]: Woah, never seen one of these in person
 [NAME]: I can feel energy radiating from it.
 :HOME:
-[NAME]:Hopefully that's what Styrg was looking for.
-[NAME]:I feel like that apple changed me somehow.
+Stryg: you`ve retrieved the apple? excellent.
+[GOTAPPLE]
+Stryg: such a crisp, vibrant specimen... it is clear why it has been such a prominent symbol in human culture.
+[NAME]: yeah, eden and snow white and whatever. apples are for rich people, dude, i`ve never even tasted one before.
+Stryg: a fruit once so widespread, now a luxury status symbol? we truly pity the wretched state your society has found itself in.
+[NAME]: that`s just life, dude. we get on just fine without your pity, thank you very much.
+Stryg: your resilience as a species is commendable. we are eager to begin our research studies of planet earth.
+stryg: you still have (# of items) more items left to retrieve:
+(list of items)
+Stryg: do feel free to rest here for a moment and regain your strength before resuming your mission.
+Stryg: we are counting on you, [NAME]. you have our utmost faith in your capabilites. good luck.
+[NAME]: I feel like that apple changed me somehow.
 [CENTER]*dash speed increased*

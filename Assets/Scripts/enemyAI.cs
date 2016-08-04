@@ -4,37 +4,43 @@ using System.Collections;
 
 public enum enemyType { Normal, Ranged };
 
-[RequireComponent (typeof (Rigidbody2D))]
-[RequireComponent (typeof (Seeker))]
+[RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(Seeker))]
 
-public class enemyAI : MonoBehaviour {
+public class enemyAI : MonoBehaviour
+{
 
-	public Transform target;
-	public float updateRate = 2f;
-	public enemyType type;
-	public GameObject healthPickup;
+    public Transform target;
+    public float updateRate = 2f;
+    public enemyType type;
+    public GameObject healthPickup;
 
-	private Seeker seeker;
-	private Rigidbody2D rb;
+    private Seeker seeker;
+    private Rigidbody2D rb;
 
-	public Path path;
-	[Range(700, 3000)] public float speed = 700f;
-	[Range(0, 200)] public float followDistance = 1f;
-	[Range(10, 1000)] public float shootDistance = 200f;
-	public ForceMode2D fMode;
-	public int health = 100;
-	[HideInInspector] public bool pathIsEnded = false;
-	public float nextWaypointDistance = 3;
-	private int currentWaypoint = 0;
-	private float playerDist = 300;
-	bool isShooting = false;
+    public Path path;
+    [Range(700, 3000)]
+    public float speed = 700f;
+    [Range(0, 200)]
+    public float followDistance = 1f;
+    [Range(10, 1000)]
+    public float shootDistance = 200f;
+    public ForceMode2D fMode;
+    public int health = 100;
+    [HideInInspector]
+    public bool pathIsEnded = false;
+    public float nextWaypointDistance = 3;
+    private int currentWaypoint = 0;
+    private float playerDist = 300;
+    bool isShooting = false;
     public bool isAttacking = false;
 
-	public GameObject weapon;
+    public GameObject weapon;
 
 
-	void Start(){
-		seeker = GetComponent<Seeker> ();
+    void Start()
+    {
+        seeker = GetComponent<Seeker>();
         rb = GetComponent<Rigidbody2D>();
 
         StartCoroutine(UpdatePath());
@@ -42,115 +48,135 @@ public class enemyAI : MonoBehaviour {
 
     }
 
-	IEnumerator UpdatePath(){
+    IEnumerator UpdatePath()
+    {
         yield return new WaitForSeconds(1f / updateRate);
 
-        if(target == null)
+        if (target == null)
             target = GameObject.FindGameObjectWithTag("Player").transform;
 
         seeker.StartPath(transform.position, target.position, OnPathComplete);
-        StartCoroutine (UpdatePath ());
-	
-	}
+        StartCoroutine(UpdatePath());
 
-	public void OnPathComplete(Path p){
-		if (!p.error) {
-			path = p;
-			currentWaypoint = 0;
-		}
-	}
+    }
 
-	void FixedUpdate(){
-		if (target == null)
-			return;
+    public void OnPathComplete(Path p)
+    {
+        if (!p.error)
+        {
+            path = p;
+            currentWaypoint = 0;
+        }
+    }
+
+    void FixedUpdate()
+    {
+        if (target == null)
+            return;
 
         if (playerDist > 200)
             return;
 
-		if (path == null)
-			return;
+        if (path == null)
+            return;
 
-		if (currentWaypoint >= path.vectorPath.Count) {
-			if (pathIsEnded) 
-				return;
+        if (currentWaypoint >= path.vectorPath.Count)
+        {
+            if (pathIsEnded)
+                return;
 
-			pathIsEnded = true;
-			return;
-		}
+            pathIsEnded = true;
+            return;
+        }
 
-		pathIsEnded = false;
+        pathIsEnded = false;
 
-		Vector3 dir = (path.vectorPath [currentWaypoint] - transform.position).normalized;
+        Vector3 dir = (path.vectorPath[currentWaypoint] - transform.position).normalized;
 
-		dir *= speed * Time.fixedDeltaTime;
+        dir *= speed * Time.fixedDeltaTime;
 
-		if (playerDist > followDistance) {
-			rb.AddForce (dir, fMode);
-		}
+        if (playerDist > followDistance)
+        {
+            rb.AddForce(dir, fMode);
+        }
 
-		float dist = Vector3.Distance (transform.position, path.vectorPath [currentWaypoint]);
+        float dist = Vector3.Distance(transform.position, path.vectorPath[currentWaypoint]);
 
-		if (dist < nextWaypointDistance) {
-			currentWaypoint++;
-			return;
-		}
+        if (dist < nextWaypointDistance)
+        {
+            currentWaypoint++;
+            return;
+        }
 
 
-	}
-		
-	// Update is called once per frame
-	void Update () {
+    }
 
-		if (health <= 0) {
-			Die ();
-			return;
-		}
+    // Update is called once per frame
+    void Update()
+    {
 
-		if (target == null) {
-			target = GameObject.FindGameObjectWithTag ("Player").transform;
-		}
+        if (health <= 0)
+        {
+            Die();
+            return;
+        }
 
-		playerDist = Vector3.Distance (transform.position, target.transform.position);
+        if (target == null)
+        {
+            target = GameObject.FindGameObjectWithTag("Player").transform;
+        }
 
-		if (playerDist > shootDistance) {
-			StopCoroutine ("Fire");
-			isShooting = false;
-			return;
-		} else {
-			// check if we are in view of target
+        playerDist = Vector3.Distance(transform.position, target.transform.position);
 
-			if (type == enemyType.Ranged) {
+        if (playerDist > shootDistance)
+        {
+            StopCoroutine("Fire");
+            isShooting = false;
+            return;
+        }
+        else
+        {
+            // check if we are in view of target
 
-				//TODO: add raycast check
+            if (type == enemyType.Ranged)
+            {
 
-				// shoot at target!
+                //TODO: add raycast check
 
-				if (isShooting) {
-					return;
-				} else {
-					StartCoroutine ("Fire");
-				}
-			} else
+                // shoot at target!
+
+                if (isShooting)
+                {
+                    return;
+                }
+                else
+                {
+                    StartCoroutine("Fire");
+                }
+            }
+            else
             {
                 if (isAttacking)
                 {
                     return;
-                } else
+                }
+                else
                 {
                     StartCoroutine("Attack");
                 }
             }
-		}
-	}
+        }
+    }
 
-	IEnumerator Fire(){
-		isShooting = true;
-		Vector3 dir =  target.position - transform.position;
-		Instantiate (weapon, transform.position+dir.normalized, Quaternion.identity);
-		yield return new WaitForSeconds (1.5f);
-		isShooting = false;
-		StartCoroutine ("Fire");
-	}
+    IEnumerator Fire()
+    {
+        isShooting = true;
+        Vector3 dir = target.position - transform.position;
+        Instantiate(weapon, transform.position + dir.normalized, Quaternion.identity);
+        yield return new WaitForSeconds(1.5f);
+        isShooting = false;
+        StartCoroutine("Fire");
+    }
 
     IEnumerator Attack()
     {
@@ -165,13 +191,17 @@ public class enemyAI : MonoBehaviour {
         StartCoroutine("Attack");
     }
 
-	void OnCollisionEnter2D(Collision2D col){
-        if (col.transform.tag == "Bullet") {
+    void OnCollisionEnter2D(Collision2D col)
+    {
+        if (col.transform.tag == "Bullet")
+        {
             health -= 25;
             Vector3 dir = (transform.position - col.transform.position);
             rb.AddForce(dir.normalized * 10, ForceMode2D.Impulse);
             Destroy(col.transform.gameObject, 0.2f);
-        } else if (col.transform.tag == "Player") {
+        }
+        else if (col.transform.tag == "Player")
+        {
             if (!isAttacking)
             {
 
@@ -180,23 +210,27 @@ public class enemyAI : MonoBehaviour {
 
             }
 
+        }
+    }
+
+    void Die()
+    {
+        health = 9999;
+        GetComponent<AudioSource>().Play();
+        GetComponentInChildren<SpriteRenderer>().enabled = false;
+
+        int h = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerStats>().health;
+
+        if (h < 100)
+        {
+            float r = Random.Range(0, 4);
+
+            if (r < 1)
+            {
+                Instantiate(healthPickup, transform.position, Quaternion.identity);
             }
         }
 
-	void Die(){
-		health = 9999;
-        GetComponent<AudioSource>().Play();
-
-		int h = GameObject.FindGameObjectWithTag ("Player").GetComponent<PlayerStats> ().health;
-
-		if (h < 100) {
-			float r = Random.Range (0, 4);
-
-			if (r < 1) {
-				Instantiate (healthPickup, transform.position, Quaternion.identity);
-			}
-		}
-
-		Destroy (this.gameObject, 1);
-	}
+        Destroy(this.gameObject, 1);
+    }
 }

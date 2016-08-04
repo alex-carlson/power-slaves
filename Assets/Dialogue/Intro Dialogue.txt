@@ -1,8 +1,8 @@
-(Press ENTER to advance dialogue)
+(Press ENTER to advance dialogue, or HOLD ENTER to skip all dialogue)
 Stryg: Greetings, biped. We seem to have gotten lost, would you be so kind as to direct us to Earth?
-Mav: (Is this joker for real?!) Uhh, you’ve landed right on it?
+Mav: (Is this joker for real?!) Uhh, you`ve landed right on it?
 Stryg: What? There must be a misunderstanding. No, we want the Earth with the vibrant metropolises and the lush landscapes…
-Mav: You’re a couple epochs too late, bud. Earth ain’t been that way for a while. We once had that utopia you’re talkin’ about, but this is all we got left now.
+Mav: You’re a couple epochs too late, bud. Earth ain`t been that way for a while. We once had that utopia you’re talkin’ about, but this is all we got left now.
 Stryg: I see.
 Mav: These days, humans are just trying to make the most of it before our time runs out, which could be any day now.
 Stryg: My apologies. Sorry we bothered you.
@@ -19,17 +19,17 @@ Stryg: Naught but a mere few relics of human civilization. Hmm… let me see…
 Stryg: Ah yes. If you could bring for us the following…
 Stryg: A sample from one of your fruit-bearing Earth trees… Perhaps the one you call AN APPLE?
 Stryg: A preserved, intact specimen of the fauna native to this planet… something like A FOSSIL.
-Stryg: One of mankind’s pivotal inventions, the one used to navigate and confirm one’s orientation… I think you humans refer to it as A COMPASS.
+Stryg: One of mankind`s pivotal inventions, the one used to navigate and confirm one`s orientation… I think you humans refer to it as A COMPASS.
 Stryg: And finally, a compendium of events in your rich history, written in your human languages… What is it called again… ah yes, A BOOK.
 Stryg: If you were to bring us these items, earth dweller, we would be most grateful.
-Mav: Yeah, yeah, gratitude’s great and all, but I can’t exactly cash it in. You’re gonna have to sweeten the pot a little if you want me to help you out.
+Mav: Yeah, yeah, gratitude`s great and all, but I can`t exactly cash it in. You`re gonna have to sweeten the pot a little if you want me to help you out.
 Stryg: Hmm… One moment, please.
 [SHORT PAUSE]
 Stryg: Very well, human, I will propose to you a deal, a gesture of goodwill if you will. If you can carry out our task successfully, we will see about transporting you to a planet perhaps more… hospitable than this one.
 Stryg: It may be too late for humankind as a species, but maybe you would prefer to live out the rest of your life in comfort and luxury?
 Mav: Sounds a hell of a lot better than kicking around in this barren wasteland, I guess.
 Stryg: Do we have a deal then, human?
-Mav: Yeah sure, I’ll get your stuff for you. (Not like I have anything better to do, to be honest…)
+Mav: Yeah sure, I`ll get your stuff for you. (Not like I have anything better to do, to be honest…)
 Stryg: Many thanks. To foster trust in this budding partnership, I will introduce myself. My name is Captain Stryg, and we hail from a planet we call Dakdeilex in the neighboring galaxy you know as the Andromeda Galaxy.
 Stryg: And you, human… Might I ask for your name?
 :INPUT NAME:

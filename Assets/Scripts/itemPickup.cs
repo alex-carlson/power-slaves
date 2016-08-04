@@ -9,6 +9,7 @@ public class itemPickup : MonoBehaviour {
     bool canPickup = false;
     public enum Powerups {DashBoost, TripleShot, SpeedBoost, Armor};
     public Powerups Power;
+    public GameObject blip;
 
     public TextAsset textFile;
 
@@ -35,6 +36,7 @@ public class itemPickup : MonoBehaviour {
         {
 
             GetComponent<SpriteRenderer>().enabled = true;
+            Instantiate(blip, transform.position, transform.rotation);
             canPickup = true;
         }
     }

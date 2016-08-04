@@ -82,6 +82,10 @@ public class PlayerStats : MonoBehaviour {
     }
 
 	void Die(){
+
+        // this needs to be fixed, when you go to the menu, the in game canvas is still there. :/
+
+
         GetComponent<AudioSource>().clip = deathSound;
         GetComponent<AudioSource>().volume = 1;
         GetComponent<AudioSource>().Play();

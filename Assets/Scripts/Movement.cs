@@ -172,7 +172,10 @@ public class Movement : MonoBehaviour {
 	void OnLevelWasLoaded(){
 		if (entrance != "") {
 			transform.parent.transform.position = GameObject.Find (entrance).transform.GetChild(0).transform.position;
-		}
+		} else
+        {
+            transform.parent.transform.position = Vector3.zero;
+        }
 	}
 
 	void Move(float x, float y){
