@@ -7,6 +7,7 @@ public class Dialogue : MonoBehaviour {
 
     public TextAsset newGameText;
 	public TextAsset textFile;
+    public TextAsset endText;
 	string[] dialogueLines;
 	int lineNumber = -1;
     [HideInInspector]
@@ -132,7 +133,16 @@ public class Dialogue : MonoBehaviour {
             {
                 lineNumber++;
                 GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<Movement>().entrance = "";
-                GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerStats>().health = 100;
+                if (PlayerPrefs.GetInt("Armor") == 1)
+                {
+                    GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerStats>().health = 200;
+                } else
+                {
+                    GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerStats>().health = 100;
+                }
+
+                GameObject.Find("Health").GetComponent<Text>().color = Color.white;
+                GameObject.Find("Health").GetComponent<Text>().text = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerStats>().health + "";
                 FadeManager.Instance.LoadLevel("Home", 1.0f);
                 return false;
             } else if (dialogue.Contains(":ENABLE_CONROLS:")) {
@@ -145,26 +155,42 @@ public class Dialogue : MonoBehaviour {
                 GameObject.Find("Name").GetComponentInChildren<Animation>().Play("NameSlideIn");
                 return false;
             }
-            else if(dialogue.Contains("[GOTAPPLE]"))
+            else if (dialogue.Contains("[GOTAPPLE]"))
             {
                 GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<Movement>().p_dashBoost = true;
                 PlayerPrefs.SetInt("DashBoost", 1);
+                PlayerPrefs.SetInt("CollectedItems", PlayerPrefs.GetInt("CollectedItems") + 1);
             }
             else if (dialogue.Contains("[GOTFOSSIL]"))
             {
                 GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<Movement>().p_tripleShot = true;
                 PlayerPrefs.SetInt("TripleShot", 1);
+                PlayerPrefs.SetInt("CollectedItems", PlayerPrefs.GetInt("CollectedItems") + 1);
             }
             else if (dialogue.Contains("[GOTBOOK]"))
             {
                 Debug.Log("Got a book, setting armor to true");
                 GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<Movement>().p_armor = true;
                 PlayerPrefs.SetInt("Armor", 1);
+                PlayerPrefs.SetInt("CollectedItems", PlayerPrefs.GetInt("CollectedItems") + 1);
             }
             else if (dialogue.Contains("[GOTCOMPASS]"))
             {
                 GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<Movement>().p_speedBoost = true;
                 PlayerPrefs.SetInt("SpeedBoost", 1);
+                PlayerPrefs.SetInt("CollectedItems", PlayerPrefs.GetInt("CollectedItems") + 1);
+            }
+            else if (dialogue.Contains("[ITEMCOUNT]"))
+            {
+                string d = dialogue.Replace("[ITEMCOUNT]", 4 - PlayerPrefs.GetInt("CollectedItems") + "");
+
+                if (PlayerPrefs.GetInt("CollectedItems") == 4)
+                {
+                    TriggerDialogue(endText);
+                } else
+                {
+                    uiText.text = d;
+                }
             }
             else
             {

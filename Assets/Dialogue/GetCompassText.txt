@@ -1,8 +1,8 @@
 [NAME]: This must be some ancient relic from a creature long extinct.
 [NAME]: I can feel energy radiating from it.
 :HOME:
-[GOTCOMPASS]
 stryg: welcome back, [name]. Have you come to deliver an item to us?
+[GOTCOMPASS]
 stryg: this is... the compass? what an interesting device...
 [NAME]: how the hell does it even work?
 stryg: according to our preliminary research, this needle serves to align itself with the earth`s north magnetic pole.
@@ -14,8 +14,7 @@ stryg: it is almost... romantic, in a way. do you not agree?
 [NAME]: there are a whole lot more places you don`t want to end up in than there are places you do want to go.
 stryg: it seems human nature has not changed perhaps as much as you would think, [NAME].
 [NAME]: maybe not, dude. otherwise we might have been able to figure out a way to save ourselves. i guess we`ll never know at this point.
-stryg: you still have (# of items) more items left to retrieve:
-(list of items)
+stryg: you still have[ITEMCOUNT] more items left to retrieve:
 Stryg: do feel free to rest here for a moment and regain your strength before resuming your mission.
 Stryg: we are counting on you, [NAME]. you have our utmost faith in your capabilites. good luck.
 [CENTER]*got Triple Shot*
