@@ -196,23 +196,7 @@ public class Movement : MonoBehaviour {
 	}
 
 	void SpriteSwap(){
-		if (playerDir == Direction.N) {
-			m_Sprite.sprite = playerSprites[1];
-		} else if (playerDir == Direction.NE) {
-			m_Sprite.sprite = playerSprites[2];
-		} else if (playerDir == Direction.E) {
-			m_Sprite.sprite = playerSprites[0];
-		} else if (playerDir == Direction.SE) {
-			m_Sprite.sprite = playerSprites[5];
-		} else if (playerDir == Direction.S) {
-			m_Sprite.sprite = playerSprites[4];
-		} else if (playerDir == Direction.SW) {
-			m_Sprite.sprite = playerSprites[6];
-		} else if (playerDir == Direction.W) {
-			m_Sprite.sprite = playerSprites[7];
-		} else {
-			m_Sprite.sprite = playerSprites[3];
-		}
+
 	}
 
 	IEnumerator Attack(){

@@ -13,12 +13,12 @@ public class Propellor : MonoBehaviour {
 		target = GameObject.FindGameObjectWithTag ("Player").transform.position;
 		Destroy (this.gameObject, 1.5f);
 		dir = transform.position - target;
-		rb.AddForce (-dir * 0.55f, ForceMode2D.Impulse);
+		rb.AddForce (-dir * 1.55f, ForceMode2D.Impulse);
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		rb.AddForce (-dir * 2.25f, ForceMode2D.Force);
+		//rb.AddForce (-dir * 2.25f, ForceMode2D.Force);
 	}
 
 	void OnCollisionEnter2D(Collision2D col){

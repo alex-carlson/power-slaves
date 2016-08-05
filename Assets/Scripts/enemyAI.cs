@@ -118,7 +118,6 @@ public class enemyAI : MonoBehaviour
         if (health <= 0)
         {
             Die();
-            return;
         }
 
         if (target == null)
@@ -215,13 +214,15 @@ public class enemyAI : MonoBehaviour
 
     void Die()
     {
+        StopAllCoroutines();
         health = 9999;
         GetComponent<AudioSource>().Play();
         GetComponentInChildren<SpriteRenderer>().enabled = false;
+        GetComponent<BoxCollider2D>().enabled = false;
 
         int h = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerStats>().health;
 
-        if (h < 100)
+        if (h < 100 || PlayerPrefs.GetInt("Armor") == 1 && h < 200)
         {
             float r = Random.Range(0, 4);
 
