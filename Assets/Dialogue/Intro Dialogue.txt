@@ -7,9 +7,9 @@ Stryg: I see.
 Mav: These days, humans are just trying to make the most of it before our time runs out, which could be any day now.
 Stryg: My apologies. Sorry we bothered you.
 Mav: S’alright. Happy trails, alien dudes.
-[spacecraft takes off]
+[TAKEOFF]
 Mav: Lucky bastards. Wish I could just ditch this hell rock like that…
-[spacecraft returns]
+[RETURN]
 Stryg: Oh, Earth dweller, are you still there?
 Mav: Uh, yeah… (What could they want this time?)
 Stryg: Most excellent. You see, making it out this far was quite the endeavor, so we were thinking, and we feel it would be rather unwise if we were to squander this opportunity.
@@ -24,7 +24,7 @@ Stryg: And finally, a compendium of events in your rich history, written in your
 Stryg: If you were to bring us these items, earth dweller, we would be most grateful.
 Mav: Yeah, yeah, gratitude`s great and all, but I can`t exactly cash it in. You`re gonna have to sweeten the pot a little if you want me to help you out.
 Stryg: Hmm… One moment, please.
-[SHORT PAUSE]
+[SHORTPAUSE]
 Stryg: Very well, human, I will propose to you a deal, a gesture of goodwill if you will. If you can carry out our task successfully, we will see about transporting you to a planet perhaps more… hospitable than this one.
 Stryg: It may be too late for humankind as a species, but maybe you would prefer to live out the rest of your life in comfort and luxury?
 Mav: Sounds a hell of a lot better than kicking around in this barren wasteland, I guess.

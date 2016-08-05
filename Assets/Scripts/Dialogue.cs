@@ -149,6 +149,30 @@ public class Dialogue : MonoBehaviour {
                 lineNumber++;
                 GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<Movement>().isActive = true;
             }
+            else if (dialogue.Contains("[TAKEOFF]"))
+            {
+                Animation myAnim = GameObject.Find("ship").GetComponent<Animation>();
+                myAnim["FlyAway_01"].speed = 1;
+                GameObject.Find("ship").GetComponent<Animation>().Play("FlyAway_01");
+            }
+            else if (dialogue.Contains("[RETURN]"))
+            {
+                Animation myAnim = GameObject.Find("ship").GetComponent<Animation>();
+                myAnim["FlyAway_01"].speed = -1;
+                GameObject.Find("ship").GetComponent<Animation>().Play("FlyAway_01");
+            }
+            else if (dialogue.Contains("[SHORTPAUSE]"))
+            {
+                Debug.Log("shortpause");
+                Animation myAnim = GameObject.Find("ship").GetComponent<Animation>();
+                myAnim["Ship_Spin"].speed = 1;
+                GameObject.Find("ship").GetComponent<Animation>().Play("Ship_Spin");
+            }
+            else if (dialogue.Contains("[ENDSEQUENCE]"))
+            {
+                GameObject.FindGameObjectWithTag("Player").SetActive(false);
+                InvokeRepeating("FloatAway", 0, 0.1f);
+            }
             else if (dialogue.Contains(":INPUT NAME:"))
             {
                 lineNumber++;
@@ -221,6 +245,24 @@ public class Dialogue : MonoBehaviour {
 			StartCoroutine (FadeTo (1, 1f, false));
 		}
 	}
+
+    void FloatAway()
+    {
+        GameObject[] myStuff = new GameObject[2];
+
+        myStuff[0] = GameObject.Find("ship");
+        myStuff[2] = GameObject.Find("Main Camera");
+
+        foreach (GameObject go in myStuff)
+        {
+            if (go.GetComponent<BoxCollider2D>())
+            {
+                go.GetComponent<BoxCollider2D>().enabled = false;
+            }
+
+            go.transform.position += (Vector3.up * 2f);
+        }
+    }
 
     public void SaveName()
     {
