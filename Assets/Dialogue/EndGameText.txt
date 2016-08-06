@@ -13,8 +13,3 @@ stryg: is there anyone you would like to bid farewell before we leave, [NAME]?
 [NAME]: and i sure as hell don`t have anyone here worth saying goodbye to, so let`s mosey on up to your crib.
 stryg: very well then, commencing takeoff in 3... 2... 1...
 [ENDSEQUENCE]
-[NAME]: [and the aliens held up their end of the deal like they said they would. i got to live out the rest of my life with them on dakdeilex, and it was unlike anything i had ever seen before.]
-[NAME]: [i lived to a ripe old age on a beautiful planet no other humans would ever get the chance to explore.]
-[NAME]: [but on that day, as we were cruising through space, when i took one last look at what remained of the only home we`ve ever known...]
-[NAME]: [...i silently mourned for all the living things we left back on earth, and i wished that whatever future they faced beyond this life would be as gentle and welcoming as the one that awaited me in the next galaxy...]
-[FIN]

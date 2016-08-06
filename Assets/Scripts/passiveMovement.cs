@@ -6,9 +6,10 @@ public enum MovementType { Floating, Shaking, Spinning, SpinFloat };
 public class passiveMovement : MonoBehaviour {
 
 	public MovementType myMotion;
+    public float intensity = 2f;
 
-	// Use this for initialization
-	void Update () {
+    // Use this for initialization
+    void Update () {
 		if (myMotion == MovementType.Floating) {
 			Floating ();
 		} if (myMotion == MovementType.SpinFloat){
@@ -19,7 +20,7 @@ public class passiveMovement : MonoBehaviour {
 	}
 
 	void Floating(){
-		transform.Translate (new Vector3(0, Mathf.Sin(2*Mathf.PI*Time.time) - Mathf.Sin(2*Mathf.PI*(Time.time - Time.deltaTime)), 0));
+		transform.Translate (new Vector3(0, Mathf.Sin(intensity * Mathf.PI*Time.time) - Mathf.Sin(intensity * Mathf.PI*(Time.time - Time.deltaTime)), 0));
 	}
 
 	void FloatingAndSpinning(){

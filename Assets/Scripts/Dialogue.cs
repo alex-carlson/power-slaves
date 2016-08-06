@@ -170,8 +170,7 @@ public class Dialogue : MonoBehaviour {
             }
             else if (dialogue.Contains("[ENDSEQUENCE]"))
             {
-                GameObject.FindGameObjectWithTag("Player").SetActive(false);
-                InvokeRepeating("FloatAway", 0, 0.1f);
+                Invoke("BeamUp", 0);
             }
             else if (dialogue.Contains(":INPUT NAME:"))
             {
@@ -246,22 +245,10 @@ public class Dialogue : MonoBehaviour {
 		}
 	}
 
-    void FloatAway()
+    void BeamUp()
     {
-        GameObject[] myStuff = new GameObject[2];
-
-        myStuff[0] = GameObject.Find("ship");
-        myStuff[2] = GameObject.Find("Main Camera");
-
-        foreach (GameObject go in myStuff)
-        {
-            if (go.GetComponent<BoxCollider2D>())
-            {
-                go.GetComponent<BoxCollider2D>().enabled = false;
-            }
-
-            go.transform.position += (Vector3.up * 2f);
-        }
+        GameObject ship = GameObject.Find("ship");
+        ship.GetComponent<Animation>().Play("Ship_Center");
     }
 
     public void SaveName()

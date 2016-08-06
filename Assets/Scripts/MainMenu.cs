@@ -26,7 +26,7 @@ public class MainMenu : MonoBehaviour {
     {
         PlayerPrefs.DeleteAll();
         PlayerPrefs.SetInt("LastLevel", -1);
-        PlayerPrefs.SetInt("CollectedItems", 0);
+        PlayerPrefs.SetInt("CollectedItems", 3);
         FadeManager.Instance.LoadLevel("Home", 2.0f);
         GetComponent<AudioSource>().Play();
     }
