@@ -7,7 +7,7 @@ stryg: the attention to detail in the calligraphy and illustrations... by my bes
 stryg: i am fascinated by the amount of painstaking labor and dedication it must have taken to produce this folio now in our possession.
 [NAME]: well, if you can figure out how to read it, you can tell me a nice bedtime story. reading`s for nerd chumps who went to school.
 stryg: know that i would be more than willing to share our research data with you, earth human.
-stryg: you still have [ITEMCOUNT] more items left to retrieve:
+stryg: you still have [ITEMCOUNT] more items left to retrieve
 Stryg: do feel free to rest here for a moment and regain your strength before resuming your mission.
 Stryg: we are counting on you, [NAME]. you have our utmost faith in your capabilites. good luck.
 [CENTER]*Health Increased*

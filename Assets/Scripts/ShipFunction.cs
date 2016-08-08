@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class ShipFunction : MonoBehaviour {
 
@@ -24,12 +25,26 @@ public class ShipFunction : MonoBehaviour {
         }
     }
 
+    void Update()
+    {
+        if(transform.position.y > 2800)
+        {
+            FadeManager.Instance.LoadLevel("Menu", 2.0f);
+        }
+    }
+
     void FloatMe()
     {
 
         GameObject go = GameObject.Find("ship");
 
-        go.transform.position += (Vector3.up * 0.5f);
+        if(transform.position.y < 450)
+        {
+            go.transform.position += (Vector3.up * 1.5f);
+        } else
+        {
+            go.transform.position += (Vector3.up * 0.5f);
+        }
 
    //   go.GetComponent<BoxCollider2D>().enabled = false;
     }

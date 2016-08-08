@@ -36,7 +36,7 @@ public class itemPickup : MonoBehaviour {
         {
 
             GetComponent<SpriteRenderer>().enabled = true;
-            Instantiate(blip, transform.position, transform.rotation);
+            Instantiate(blip, transform.position + Vector3.forward , transform.rotation);
             canPickup = true;
         }
     }

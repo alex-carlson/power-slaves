@@ -170,7 +170,8 @@ public class Movement : MonoBehaviour {
     }
 
 	void OnLevelWasLoaded(){
-		if (entrance != "") {
+        isActive = true;
+        if (entrance != "") {
 			transform.parent.transform.position = GameObject.Find (entrance).transform.GetChild(0).transform.position;
 		} else
         {

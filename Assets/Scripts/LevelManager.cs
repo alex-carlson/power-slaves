@@ -11,6 +11,7 @@ public class LevelManager : MonoBehaviour {
 		//PlayerPrefs.SetInt ("LastLevel", SceneManager.GetActiveScene ().buildIndex);
 		DontDestroyOnLoad(transform.gameObject);
         Instantiate(player, Vector3.zero, Quaternion.identity);
+        Cursor.visible = false;
     }
 
 	public static void loadLevel(string e = ""){
@@ -22,12 +23,9 @@ public class LevelManager : MonoBehaviour {
 	}
 
 	public static void GameOver(){
-        foreach (GameObject o in Object.FindObjectsOfType<GameObject>())
-        {
-            Destroy(o);
-            return;
-        }
+        Debug.Log("Ded");
         FadeManager.Instance.LoadLevel ("Menu", 1.0f);
 		SceneManager.UnloadScene (SceneManager.GetActiveScene().buildIndex);
-	}
+        Destroy(GameObject.FindGameObjectWithTag("PlayerCanvas"));
+    }
 }

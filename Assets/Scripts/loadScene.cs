@@ -10,7 +10,6 @@ public class loadScene : MonoBehaviour {
 	void OnTriggerEnter2D(Collider2D col){
 		if (col.tag == "Player") {
             col.transform.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-            col.GetComponentInChildren<Movement>().isActive = false;
 			//SceneManager.LoadScene (levelToLoad);
 			//LevelManager.loadLevel(levelToLoad, entrance);
 			FadeManager.Instance.LoadLevel (levelToLoad, 1.0f, entrance);

@@ -58,7 +58,7 @@ public class PlayerStats : MonoBehaviour {
 
 		} else if (col.transform.tag == "EnemyBullet")
         {
-            health -= 25;
+            health -= 10;
             GameObject.Find("Health").GetComponent<Text>().color = Color.white;
             GameObject.Find("Health").GetComponent<Text>().text = health + "";
             transform.GetComponentInChildren<Movement>().StartCoroutine("Blink");
@@ -72,12 +72,13 @@ public class PlayerStats : MonoBehaviour {
         if (health <= 25)
         {
             GameObject.Find("Health").GetComponent<Text>().color = Color.red;
-            GameObject.Find("Health").GetComponent<Text>().text = 0 + "";
+            GameObject.Find("Health").GetComponent<Text>().text = health + "";
         }
 
         if (health <= 0)
         {
             Die();
+            health = 9999;
         }
     }
 

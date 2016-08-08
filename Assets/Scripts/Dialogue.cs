@@ -13,7 +13,7 @@ public class Dialogue : MonoBehaviour {
     [HideInInspector]
     public string name = "Maverick";
     private float skipTimer = 0f;
-    private float skipTime = 1.5f;
+    private float skipTime = 1f;
 
 	public Text uiText;
 	Canvas canvas;
@@ -38,26 +38,32 @@ public class Dialogue : MonoBehaviour {
             PlayerPrefs.SetInt("LastLevel", SceneManager.GetActiveScene().buildIndex);
         }
 	}
-	
-	// Update is called once per frame
-	void Update () {
-		if (lineNumber < 0) {
-			lineNumber = -1;
-		}
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Return))
+        {
+            Next();
+        }
+    }
+
+    void FixedUpdate()
+    {
+        if (lineNumber < 0)
+        {
+            lineNumber = -1;
+        }
 
         if (Input.GetKey(KeyCode.Return))
         {
             skipTimer += 0.01f;
-        } else
+        }
+        else
         {
             skipTimer = 0;
         }
 
-		if (Input.GetKeyDown (KeyCode.Return)) {
-			Next ();
-		}
-
-        if(skipTimer > skipTime)
+        if (skipTimer > skipTime)
         {
             uiText.text = "";
             StartCoroutine(hidePanel());
@@ -65,7 +71,7 @@ public class Dialogue : MonoBehaviour {
             PlayerPrefs.SetString("Name", "Mav");
             skipTimer = 0;
         }
-	}
+    }
 
     public void TriggerDialogue(TextAsset txt, bool random = false)
     {
@@ -170,12 +176,14 @@ public class Dialogue : MonoBehaviour {
             }
             else if (dialogue.Contains("[ENDSEQUENCE]"))
             {
+                GameObject.FindGameObjectWithTag("PlayerCanvas").SetActive(false);
                 Invoke("BeamUp", 0);
             }
             else if (dialogue.Contains(":INPUT NAME:"))
             {
                 lineNumber++;
                 GameObject.Find("Name").GetComponentInChildren<Animation>().Play("NameSlideIn");
+                Cursor.visible = true;
                 return false;
             }
             else if (dialogue.Contains("[GOTAPPLE]"))
@@ -258,6 +266,7 @@ public class Dialogue : MonoBehaviour {
         name = GameObject.Find("Name").GetComponentInChildren<Text>().text;
         Debug.Log("Player Name set to: "+name);
         GameObject.Find("Name").SetActive(false);
+        Cursor.visible = false;
     }
 
 	IEnumerator hidePanel(){

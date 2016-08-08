@@ -8,7 +8,7 @@ Stryg: such a crisp, vibrant specimen... it is clear why it has been such a prom
 Stryg: a fruit once so widespread, now a luxury status symbol? we truly pity the wretched state your society has found itself in.
 [NAME]: that`s just life, dude. we get on just fine without your pity, thank you very much.
 Stryg: your resilience as a species is commendable. we are eager to begin our research studies of planet earth.
-stryg: you still have [ITEMCOUNT] more items left to retrieve:
+stryg: you still have [ITEMCOUNT] more items left to retrieve
 Stryg: do feel free to rest here for a moment and regain your strength before resuming your mission.
 Stryg: we are counting on you, [NAME]. you have our utmost faith in your capabilites. good luck.
 [NAME]: I feel like that apple changed me somehow.
