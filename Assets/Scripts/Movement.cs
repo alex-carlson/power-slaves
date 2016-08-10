@@ -73,7 +73,7 @@ public class Movement : MonoBehaviour {
             m_anim.SetFloat("x", x);
             m_anim.SetFloat("y", y);
         }
-	
+
 		if(atk && isAttacking == false) {
             if (isActive == true)
                 StartCoroutine ("Attack");
@@ -235,6 +235,7 @@ public class Movement : MonoBehaviour {
     }
 
 	IEnumerator Blink(){
+		GetComponentInParent<PlayerStats> ().wasHit = true;
 		SpriteRenderer sp = GetComponent<SpriteRenderer> ();
 		sp.enabled = false;
 		yield return new WaitForSeconds (0.18f);
@@ -251,6 +252,7 @@ public class Movement : MonoBehaviour {
 		sp.enabled = false;
 		yield return new WaitForSeconds (0.18f);
 		sp.enabled = true;
+		GetComponentInParent<PlayerStats> ().wasHit = false;
 	}
 
 	float knockback(){
