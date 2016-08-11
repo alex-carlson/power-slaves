@@ -23,7 +23,6 @@ public class LevelManager : MonoBehaviour {
 	}
 
 	public static void GameOver(){
-        Debug.Log("Ded");
         FadeManager.Instance.LoadLevel ("Menu", 1.0f);
 		SceneManager.UnloadScene (SceneManager.GetActiveScene().buildIndex);
         Destroy(GameObject.FindGameObjectWithTag("PlayerCanvas"));

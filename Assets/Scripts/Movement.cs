@@ -24,6 +24,8 @@ public class Movement : MonoBehaviour {
 	public bool p_speedBoost = false;
 	public bool p_armor = false;
 
+	Image endGameFade;
+
 	Sprite[] playerSprites;
 	Texture2D playerSpriteSheet;
 
@@ -59,6 +61,8 @@ public class Movement : MonoBehaviour {
 
         transform.position = Vector3.zero;
 		transform.parent.position = Vector3.zero;
+
+		endGameFade = GameObject.Find ("EndGameFade").GetComponent<Image> ();
 	}
 
 	// Update is called once per frame
@@ -84,7 +88,7 @@ public class Movement : MonoBehaviour {
                 StartCoroutine("Block");
 		}
 
-		if (Input.GetKey (KeyCode.Q)) {
+		if (Input.GetButtonDown("Jump")) {
 			objectiveMenu.SetActive (true);
             if (p_dashBoost)
             {
@@ -103,16 +107,19 @@ public class Movement : MonoBehaviour {
 			objectiveMenu.SetActive (false);
 		}
 
-		if (Input.GetKey (KeyCode.Escape)) {
+		if (Input.GetButton("Cancel")) {
 			quitTime += Time.deltaTime;
+
+			endGameFade.color = new Color (0, 0, 0, quitTime);
 
 			if(quitTime > 1.5f){
 				Application.Quit();
 			}
 		}
 
-		if(Input.GetKeyUp(KeyCode.Escape)){
+		if(Input.GetButtonUp("Cancel")){
 			quitTime = 0;
+			endGameFade.color = new Color (0, 0, 0, 0);
 		}
 
         if (isActive == true)
@@ -235,6 +242,7 @@ public class Movement : MonoBehaviour {
     }
 
 	IEnumerator Blink(){
+		GetComponentInParent<PlayerStats> ().wasHit = true;
 		SpriteRenderer sp = GetComponent<SpriteRenderer> ();
 		sp.enabled = false;
 		yield return new WaitForSeconds (0.18f);
@@ -251,6 +259,7 @@ public class Movement : MonoBehaviour {
 		sp.enabled = false;
 		yield return new WaitForSeconds (0.18f);
 		sp.enabled = true;
+		GetComponentInParent<PlayerStats> ().wasHit = false;
 	}
 
 	float knockback(){
