@@ -1,4 +1,4 @@
-(Press ENTER to advance dialogue, or HOLD ENTER to skip all dialogue)
+Press anything button to advance dialogue, hold any button to skip
 Stryg: Greetings, biped. We seem to have gotten lost, would you be so kind as to direct us to Earth?
 Mav: (Is this joker for real?!) Uhh, you`ve landed right on it?
 Stryg: What? There must be a misunderstanding. No, we want the Earth with the vibrant metropolises and the lush landscapes…
@@ -31,14 +31,10 @@ Mav: Sounds a hell of a lot better than kicking around in this barren wasteland,
 Stryg: Do we have a deal then, human?
 Mav: Yeah sure, I`ll get your stuff for you. (Not like I have anything better to do, to be honest…)
 Stryg: Many thanks. To foster trust in this budding partnership, I will introduce myself. My name is Captain Stryg, and we hail from a planet we call Dakdeilex in the neighboring galaxy you know as the Andromeda Galaxy.
-Stryg: And you, human… Might I ask for your name?
-:INPUT NAME:
-Stryg: Ah. [NAME]. That is a very… Interesting name.
-Stryg: Very well, [NAME]. We will be waiting here until you return with all four items. Should you grow weary in your efforts, we will offer you a place of respite  and a rejuvenation tank to nurse you back to health.
+Stryg: We will be waiting here until you return with all four items. Should you grow weary in your efforts, we will offer you a place of respite  and a rejuvenation tank to nurse you back to health.
 Stryg: Good luck and godspeed, [NAME].
-[CENTER](WASD to move)
-[CENTER](PRESS M to fire)
-[CENTER](PRESS N to dash)
-[CENTER](HOLD Q to view objectives)
-[CENTER](HOLD ESC to quit)
+[CENTER]Upper Buttons to Attack
+[CENTER]Lower Buttons to Dash
+[CENTER]HOLD START to View Objectives
+[CENTER]HOLD MENU to Quit
 :ENABLE_CONROLS:

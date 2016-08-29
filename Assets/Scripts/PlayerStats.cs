@@ -12,6 +12,7 @@ public class PlayerStats : MonoBehaviour {
     public AudioClip deathSound;
 	AudioSource m_audio;
 	Rigidbody2D rb;
+	[HideInInspector] public bool wasHit = false;
 
 	[HideInInspector] public bool wasHit = false;
 
@@ -53,21 +54,35 @@ public class PlayerStats : MonoBehaviour {
 		if (col.transform.tag == "Enemy" && col.transform.GetComponent<enemyAI>().isAttacking) {
             GameObject.Find("Health").GetComponent<Text>().color = Color.white;
             GameObject.Find ("Health").GetComponent<Text> ().text = health + "";
+<<<<<<< HEAD
 			if (wasHit == false) {
 				health -= 15;
 				transform.GetComponentInChildren<Movement> ().StartCoroutine ("Blink");
 				GameObject clone = (GameObject) Instantiate (hurtParticle, transform.position, Quaternion.Euler(new Vector3(0, 0, Random.Range(0, 360))));
 				Destroy (clone, 0.2f);
 			}
+=======
+
+			if (wasHit == false) {
+				health -= 25;
+				transform.GetComponentInChildren<Movement>().StartCoroutine("Blink");
+				GameObject clone = (GameObject) Instantiate (hurtParticle, transform.position, Quaternion.Euler(new Vector3(0, 0, Random.Range(0, 360))));
+				Destroy (clone, 0.2f);
+			}
+
+>>>>>>> 6d5fe80c82f4b0af6850b02bee8b8b61842a3d79
 
 		} else if (col.transform.tag == "EnemyBullet")
         {
-            health -= 10;
+			if (wasHit == false) {
+				health -= 10;
+				transform.GetComponentInChildren<Movement>().StartCoroutine("Blink");
+				GameObject clone = (GameObject)Instantiate(hurtParticle, transform.position, Quaternion.Euler(new Vector3(0, 0, Random.Range(0, 360))));
+				Destroy(clone, 0.2f);
+			}
+            
             GameObject.Find("Health").GetComponent<Text>().color = Color.white;
             GameObject.Find("Health").GetComponent<Text>().text = health + "";
-            transform.GetComponentInChildren<Movement>().StartCoroutine("Blink");
-            GameObject clone = (GameObject)Instantiate(hurtParticle, transform.position, Quaternion.Euler(new Vector3(0, 0, Random.Range(0, 360))));
-            Destroy(clone, 0.2f);
 		}
 
         // use this to trigger dialogue!
